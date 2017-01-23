@@ -1,15 +1,15 @@
 
 --[[
-                                             
-     Powerarrow Darker Awesome WM config 2.0 
-     github.com/copycat-killer               
-                                             
+
+     Powerarrow Darker Awesome WM config 2.0
+     github.com/copycat-killer
+
 --]]
 
 local theme                                     = {}
 
 theme.dir                                       = os.getenv("HOME") .. "/.config/awesome/themes/powerarrow-darker"
-theme.wallpaper                                 = theme.dir .. "/wall.png"
+theme.wallpaper                                 = os.getenv("HOME") .. "/.config/awesome/wall.png"
 
 theme.green                                     = "#7AC82E"
 theme.blue                                      = "#2587CC"
