@@ -395,8 +395,14 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
 
+    local mybasewidget = wibox.layout.flex.horizontal()
+    mybasewidget.fg_focus     = beautiful.fg_focus
+    mybasewidget.fg_normal    = beautiful.fg_normal
+    mybasewidget.fg_urgent    = beautiful.fg_urgent
+    mybasewidget.fg_minimize  = "#808080"
+
     -- Create a tasklist widget
-    s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
+    s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons, mybasewidget)
 
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s, height = 18 })
