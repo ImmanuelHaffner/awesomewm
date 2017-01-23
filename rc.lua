@@ -605,35 +605,35 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "Up",
         function ()
             awful.util.spawn_with_shell("amixer -D pulse sset Master 5%+")
-            volumewidget.update()
+            volume.update()
         end,
         {description = "increase volume", group = "pulse"}),
     awful.key({}, "XF86AudioRaiseVolume",
         function ()
             awful.util.spawn_with_shell("amixer -D pulse sset Master 5%+")
-            volumewidget.update()
+            volume.update()
         end),
     awful.key({ modkey }, "Down",
         function ()
             awful.util.spawn_with_shell("amixer -D pulse sset Master 5%-")
-            volumewidget.update()
+            volume.update()
         end,
         {description = "decrease volume", group = "pulse"}),
     awful.key({},"XF86AudioLowerVolume",
         function ()
             awful.util.spawn_with_shell("amixer -D pulse sset Master 5%-")
-            volumewidget.update()
+            volume.update()
         end),
     awful.key({ modkey }, "m",
         function ()
             awful.util.spawn_with_shell("amixer -D pulse sset Master toggle")
-            volumewidget.update()
+            volume.update()
         end,
         {description = "mute", group = "pulse"}),
     awful.key({}, "XF86AudioMute",
         function ()
             awful.util.spawn_with_shell("amixer -D pulse sset Master toggle")
-            volumewidget.update()
+            volume.update()
         end),
 
     -- MPD control
@@ -667,6 +667,7 @@ globalkeys = awful.util.table.join(
     awful.key({ altkey, "Control" }, "Up",
       function ()
         awful.util.spawn_with_shell("mpc volume +5")
+        mpdwidget.update()
       end,
       {description = "increase volume", group = "mpd"}),
     awful.key({ altkey, "Control" }, "Down",
