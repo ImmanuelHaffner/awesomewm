@@ -396,7 +396,7 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
     -- Quake application
-    s.quake = lain.util.quake({ app = terminal })
+    s.quake = lain.util.quake({ app = terminal, followtag = true, argname = "--name %s" })
 
     -- Wallpaper
     set_wallpaper(s)
@@ -491,6 +491,9 @@ root.buttons(awful.util.table.join(
 
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
+    -- Quake terminal
+    awful.key({ modkey }, "`", function() awful.screen.focused().quake:toggle() end),
+
     -- Take a screenshot
     -- https://github.com/copycat-killer/dots/blob/master/bin/screenshot
     awful.key({ altkey }, "p", function() os.execute("screenshot") end),
