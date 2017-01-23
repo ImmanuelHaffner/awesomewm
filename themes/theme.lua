@@ -73,7 +73,7 @@ theme.widget_vol_mute                           = theme.dir .. "/icons/vol_mute.
 theme.widget_mail                               = theme.dir .. "/icons/mail.png"
 theme.widget_mail_on                            = theme.dir .. "/icons/mail_on.png"
 
-theme.tasklist_plain_task_name                  = true
+theme.tasklist_plain_task_name                  = false
 theme.tasklist_disable_icon                     = true
 
 theme.useless_gap                               = 0
