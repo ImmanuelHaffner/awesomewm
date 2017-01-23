@@ -591,6 +591,16 @@ globalkeys = awful.util.table.join(
     awful.key({ altkey, }, "h", function () fsroot.show(7) end),
     awful.key({ altkey, }, "w", function () myweather.show(7) end),
 
+    -- Screen Brightness
+    awful.key({}, "XF86MonBrightnessUp",
+        function ()
+            awful.util.spawn_with_shell("xbacklight -steps 5 -set $(($(xbacklight -get) * 1.3 + 2))")
+        end),
+    awful.key({}, "XF86MonBrightnessDown",
+        function ()
+            awful.util.spawn_with_shell("xbacklight -steps 5 -set $(($(xbacklight -get) / 1.3 - 2))")
+        end),
+
     -- Pulse volume control
     awful.key({ modkey }, "Up",
         function ()
