@@ -284,14 +284,30 @@ local volume = lain.widgets.alsa({
 
 -- Net
 local neticon = wibox.widget.imagebox(beautiful.widget_net)
-neticon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn_with_shell(iptraf) end)))
 local netwidget = lain.widgets.net({
-    settings = function()
-        widget:set_markup(markup("#7AC82E", " " .. net_now.received)
-                          .. " " ..
-                          markup("#46A8C3", " " .. net_now.sent .. " "))
+  settings = function()
+    local recv = tonumber(net_now.received)
+    local sent = tonumber(net_now.sent)
+    local color_recv = beautiful.blue
+    local color_sent = beautiful.blue
+    if recv > 8000 then
+      color_recv = beautiful.magenta
+    elseif recv > 2000 then
+      color_recv = beautiful.green
     end
+    if sent > 400 then
+      color_sent = beautiful.magenta
+    elseif sent > 100 then
+      color_sent = beautiful.green
+    end
+
+    widget:set_markup(markup(color_recv, string.format('%6.1f', recv))
+    .. '  '
+    ..  markup(color_sent, string.format('%5.1f', sent)))
+  end
 })
+neticon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn_with_shell(iptraf) end)))
+netwidget:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn_with_shell(iptraf) end)))
 
 -- Separators
 local spr     = wibox.widget.textbox(' ')
