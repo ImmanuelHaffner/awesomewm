@@ -67,8 +67,14 @@ local editor     = "/usr/bin/nvim"
 local browser    = "/usr/bin/firefox"
 local mail       = "/usr/bin/thunderbird"
 local chat       = "/usr/bin/pidgin"
-local gui_editor = "gvim"
-local graphics   = "gimp"
+local gui_editor = "/usr/bin/gvim"
+local graphics   = "/usr/bin/gimp"
+local file_browser = "/usr/bin/nemo"
+local iptraf     = terminal .. " -e /usr/bin/bwm-ng"
+local mixer      = terminal .. " -e /usr/bin/alsamixer"
+local musicplr   = terminal .. " -e /usr/bin/ncmpcpp "
+local top        = terminal .. " -e /usr/bin/htop"
+
 local tagnames   = {"term", "web", "doc", "file", "chat", "app", "gfx"}
 
 -- table of layouts to cover with awful.layout.inc, order matters.
