@@ -152,7 +152,7 @@ local mytextclock = lain.widgets.abase({
 -- calendar
 lain.widgets.calendar.attach(mytextclock, {
     notification_preset = {
-        font = "Terminus 7",
+        font = "Terminus 12",
         fg   = beautiful.fg_normal,
         bg   = beautiful.bg_normal
     }
@@ -229,7 +229,7 @@ local tempwidget = lain.widgets.temp({
 local fsicon = wibox.widget.imagebox(beautiful.widget_hdd)
 local fsroot = lain.widgets.fs({
     options  = "--exclude-type=tmpfs",
-    notification_preset = { fg = beautiful.fg_normal, bg = beautiful.bg_normal, font = "Terminus 7" },
+    notification_preset = { fg = beautiful.fg_normal, bg = beautiful.bg_normal, font = "Terminus 6" },
     settings = function()
         widget:set_text(" " .. fs_now.used .. "% ")
     end
@@ -405,7 +405,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons, mybasewidget)
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = 18 })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = 26 })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
