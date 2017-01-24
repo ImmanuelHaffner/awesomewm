@@ -303,7 +303,8 @@ local netwidget = lain.widgets.net({
 
     widget:set_markup(markup(color_recv, string.format('%6.1f', recv))
     .. '  '
-    ..  markup(color_sent, string.format('%5.1f', sent)))
+    ..  markup(color_sent, string.format('%5.1f', sent))
+    .. ' ')
   end
 })
 neticon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn_with_shell(iptraf) end)))
