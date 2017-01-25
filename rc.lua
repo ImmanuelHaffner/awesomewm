@@ -567,6 +567,22 @@ globalkeys = awful.util.table.join(
               {description = "focus the next screen", group = "screen"}),
     awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end,
               {description = "focus the previous screen", group = "screen"}),
+    awful.key({ modkey, "Control", "Shift" }, "j", function ()
+      local c = client.focus
+      awful.screen.focus_relative(1)
+      awful.client.movetoscreen(c, mouse.screen)
+      client.focus = c
+      c:raise()
+    end,
+              {description = "move client to the next screen", group = "screen"}),
+    awful.key({ modkey, "Control", "Shift" }, "k", function ()
+      local c = client.focus
+      awful.screen.focus_relative(-1)
+      awful.client.movetoscreen(c, mouse.screen)
+      client.focus = c
+      c:raise()
+    end,
+              {description = "move client to the previous screen", group = "screen"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
     awful.key({ modkey,           }, "Tab",
