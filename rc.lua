@@ -195,7 +195,7 @@ local mpdwidget = lain.widgets.mpd({
             title  = mpd_now.title  .. " "
             mpdicon:set_image(beautiful.widget_music_on)
         elseif mpd_now.state == "pause" then
-            artist = " mpd "
+            artist = ""
             title  = "paused "
         else
             artist = ""
@@ -206,6 +206,12 @@ local mpdwidget = lain.widgets.mpd({
         widget:set_markup(markup("#EA6F81", artist) .. title)
     end
 })
+
+mpdbtns = awful.util.table.join(
+  awful.button( {}, 1, function () awful.util.spawn_with_shell( musicplr ) end ),
+  awful.button( {}, 3, function () os.execute( "/usr/bin/mpc toggle") end ))
+mpdicon:buttons(mpdbtns)
+mpdwidget:buttons(mpdbtns)
 
 -- MEM
 local memicon = wibox.widget.imagebox(beautiful.widget_mem)
