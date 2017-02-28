@@ -158,7 +158,7 @@ local mytextclock = lain.widgets.abase({
 -- calendar
 lain.widgets.calendar.attach(mytextclock, {
     notification_preset = {
-        font = "Terminus 12",
+        font = "Inconsolata 6",
         fg   = beautiful.fg_normal,
         bg   = beautiful.bg_normal
     }
@@ -241,7 +241,11 @@ local tempwidget = lain.widgets.temp({
 local fsicon = wibox.widget.imagebox(beautiful.widget_hdd)
 local fsroot = lain.widgets.fs({
     options  = "--exclude-type=tmpfs",
-    notification_preset = { fg = beautiful.fg_normal, bg = beautiful.bg_normal, font = "Terminus 6" },
+    notification_preset = {
+      fg = beautiful.fg_normal,
+      bg = beautiful.bg_normal,
+      font = "Inconsolata 5"
+    },
     settings = function()
         widget:set_text(" " .. fs_now.used .. "% ")
     end
