@@ -158,7 +158,7 @@ local mytextclock = lain.widgets.abase({
 -- calendar
 lain.widgets.calendar.attach(mytextclock, {
     notification_preset = {
-        font = "Inconsolata 6",
+        font = "Inconsolata 10",
         fg   = beautiful.fg_normal,
         bg   = beautiful.bg_normal
     }
@@ -244,7 +244,7 @@ local fsroot = lain.widgets.fs({
     notification_preset = {
       fg = beautiful.fg_normal,
       bg = beautiful.bg_normal,
-      font = "Inconsolata 5"
+      font = "Inconsolata 8"
     },
     settings = function()
         widget:set_text(" " .. fs_now.used .. "% ")
