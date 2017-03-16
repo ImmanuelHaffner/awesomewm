@@ -148,7 +148,7 @@ local clockicon = wibox.widget.imagebox(beautiful.widget_clock)
 --local mytextclock = wibox.widget.textclock(" %a %d %b  %H:%M")
 
 local mytextclock = lain.widgets.abase({
-    timeout  = 60,
+    timeout  = 5,
     cmd      = " date +'%a %d %b %R'",
     settings = function()
         widget:set_markup(" " .. output)
