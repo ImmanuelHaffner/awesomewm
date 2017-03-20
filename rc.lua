@@ -72,7 +72,8 @@ local graphics   = "/usr/bin/gimp"
 local file_browser = "/usr/bin/nemo"
 local iptraf     = terminal .. " -e /usr/bin/bwm-ng"
 local mixer      = terminal .. " -e /usr/bin/alsamixer"
-local musicplr   = terminal .. " -e /usr/bin/ncmpcpp "
+local musicplr   = terminal .. " -e /usr/bin/ncmpcpp"
+local alsamixer  = terminal .. " -e /usr/bin/alsamixer"
 local top        = terminal .. " -e /usr/bin/htop"
 
 local tagnames   = {"term", "web", "doc", "file", "chat", "app", "gfx"}
@@ -206,8 +207,7 @@ local mpdwidget = lain.widgets.mpd({
         widget:set_markup(markup("#EA6F81", artist) .. title)
     end
 })
-
-mpdbtns = awful.util.table.join(
+local mpdbtns = awful.util.table.join(
   awful.button( {}, 1, function () awful.util.spawn_with_shell( musicplr ) end ),
   awful.button( {}, 3, function () os.execute( "/usr/bin/mpc toggle") end ))
 mpdicon:buttons(mpdbtns)
@@ -228,6 +228,10 @@ local cpuwidget = lain.widgets.cpu({
         widget:set_text(" " .. cpu_now.usage .. "% ")
     end
 })
+local cpubtns = awful.util.table.join(awful.button( {}, 1, function () awful.util.spawn_with_shell( top ) end ))
+cpuicon:buttons(cpubtns)
+cpuwidget:buttons(cpubtns)
+
 
 -- Coretemp
 local tempicon = wibox.widget.imagebox(beautiful.widget_temp)
@@ -291,6 +295,11 @@ local volume = lain.widgets.alsa({
         widget:set_text(" " .. volume_now.level .. "% ")
     end
 })
+local volbtns = awful.util.table.join(
+  awful.button( {}, 1, function () awful.util.spawn_with_shell( alsamixer ) end ),
+  awful.button( {}, 3, function () awful.util.spawn_with_shell("amixer -D pulse sset Master toggle") end ))
+volicon:buttons(volbtns)
+volume:buttons(volbtns)
 
 -- Net
 local neticon = wibox.widget.imagebox(beautiful.widget_net)
