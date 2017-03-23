@@ -146,7 +146,6 @@ local markup = lain.util.markup
 local separators = lain.util.separators
 
 local clockicon = wibox.widget.imagebox(beautiful.widget_clock)
---local mytextclock = wibox.widget.textclock(" %a %d %b  %H:%M")
 
 local mytextclock = lain.widgets.abase({
     timeout  = 5,
