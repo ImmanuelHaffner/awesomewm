@@ -558,7 +558,7 @@ globalkeys = awful.util.table.join(
             awful.client.focus.bydirection("right")
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
+    awful.key({ modkey, "Shift"   }, "w", function () mymainmenu:show() end,
               {description = "show main menu", group = "awesome"}),
 
     -- Layout manipulation
@@ -662,11 +662,6 @@ globalkeys = awful.util.table.join(
 
     -- Dropdown application
     awful.key({ modkey, }, "z", function () awful.screen.focused().quake:toggle() end),
-
-    -- Widgets popups
-    awful.key({ altkey, }, "c", function () lain.widgets.calendar.show(7) end),
-    awful.key({ altkey, }, "h", function () fsroot.show(7) end),
-    awful.key({ altkey, }, "w", function () myweather.show(7) end),
 
     -- Screen Brightness
     awful.key({}, "XF86MonBrightnessUp",
