@@ -165,26 +165,14 @@ lain.widgets.calendar.attach(mytextclock, {
     }
 })
 
--- Mail IMAP check
-local mailicon = wibox.widget.imagebox(beautiful.widget_mail)
-mailicon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn(mail) end)))
---[[ commented because it needs to be set before use
-local mailwidget = lain.widgets.imap({
-    timeout  = 180,
-    server   = "server",
-    mail     = "mail",
-    password = "keyring get mail",
+-- Weather
+local myweather = lain.widgets.weather({
+    city_id = 2842647, -- Saarbrücken
     settings = function()
-        if mailcount > 0 then
-            widget:set_text(" " .. mailcount .. " ")
-            mailicon:set_image(beautiful.widget_mail_on)
-        else
-            widget:set_text("")
-            mailicon:set_image(beautiful.widget_mail)
-        end
+        units = math.floor(weather_now["main"]["temp"])
+        widget:set_markup(" " .. units .. " ")
     end
 })
-]]
 
 -- MPD
 local mpdicon = wibox.widget.imagebox(beautiful.widget_music)
@@ -471,8 +459,8 @@ awful.screen.connect_for_each_screen(function(s)
             volicon,
             volume,
             arrl_ld,
-            wibox.container.background(mailicon, beautiful.bg_focus),
-            --wibox.container.background(mailwidget, beautiful.bg_focus),
+            wibox.container.background(myweather.icon, beautiful.bg_focus),
+            wibox.container.background(myweather, beautiful.bg_focus),
             arrl_dl,
             memicon,
             memwidget,
