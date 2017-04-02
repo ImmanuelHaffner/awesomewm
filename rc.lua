@@ -356,11 +356,9 @@ local tasklist_buttons = awful.util.table.join(
                          c:raise()
                        elseif client.focus == c then
                          if c.maximized then
-                           c.maximized_horizontal = false
-                           c.maximized_vertical = false
+                           c.maximized = false
                          else
-                           c.maximized_horizontal = true
-                           c.maximized_vertical = true
+                           c.maximized = true
                            c:raise()
                          end
                        else
