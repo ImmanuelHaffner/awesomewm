@@ -913,8 +913,7 @@ awful.rules.rules = {
       properties = { screen = 1, tag = awful.screen.focused().tags[1] } },
 
     { rule = { class = "Gimp", role = "gimp-image-window" },
-          properties = { maximized_horizontal = true,
-                         maximized_vertical = true } },
+          properties = { maximized = true } },
 
     -- place Firefox on tag 2
     { rule = { class = "Firefox" },
@@ -1038,7 +1037,7 @@ end)
 -- No border for maximized clients
 client.connect_signal("focus",
     function(c)
-        if c.maximized_horizontal == true and c.maximized_vertical == true then
+        if c.maximized == true then
             c.border_width = 0
         -- no borders if only 1 client visible
         elseif #awful.client.visible(mouse.screen) > 1 then
