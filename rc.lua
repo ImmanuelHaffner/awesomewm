@@ -703,6 +703,12 @@ globalkeys = awful.util.table.join(
         end),
 
     -- MPD control
+    -- open ncmpcpp
+    awful.key({ modkey, altkey }, "n",
+      function()
+        awful.util.spawn_with_shell(musicplr)
+      end,
+      {description = "Open NCMPCPP", group = "mpd"}),
     -- toggle Pause/Play
     awful.key({ altkey, "Control" }, "p",
       function ()
