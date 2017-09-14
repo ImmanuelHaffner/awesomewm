@@ -76,7 +76,7 @@ local musicplr   = terminal .. " -e /usr/bin/ncmpcpp"
 local alsamixer  = terminal .. " -e /usr/bin/alsamixer"
 local top        = terminal .. " -e /usr/bin/htop"
 
-local tagnames   = {"term", "web", "doc", "file", "chat", "app", "gfx"}
+local tagnames   = {"term", "web", "doc", "file", "app", "gfx", "chat"}
 
 -- table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
