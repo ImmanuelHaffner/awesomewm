@@ -917,10 +917,6 @@ awful.rules.rules = {
     { rule_any = { type = { "dialog", "normal" } },
       properties = { titlebars_enabled = false } },
 
-    -- Set Firefox to always map on the first tag on screen 1.
-    { rule = { class = "Firefox" },
-      properties = { screen = 1, tag = awful.screen.focused().tags[1] } },
-
     { rule = { class = "Gimp", role = "gimp-image-window" },
           properties = { maximized = true } },
 
@@ -951,30 +947,29 @@ awful.rules.rules = {
 
     -- place Pidgin on the chat tag
     { rule = { class = "Pidgin" },
-      properties = { tag = awful.screen.focused().tags[5] } },
+      properties = { tag = awful.screen.focused().tags[7] } },
 
     -- put pidgin password prompts ontop
     { rule = { class = "Pidgin", role = "multifield" },
       properties = { ontop = true } },
 
-    -- place Steam stuff on steam tag
+    -- place Steam stuff on app tag
     { rule = { class = "Steam" },
-      properties = { tag = awful.screen.focused().tags[6] } },
+      properties = { tag = awful.screen.focused().tags[5] } },
 
     -- place Gimp on graphics tag
     { rule = { class = "Gimp" },
-      properties = { tag = awful.screen.focused().tags[7] } },
+      properties = { tag = awful.screen.focused().tags[6] } },
 
     -- put the dock and toolbox ontop
     { rule = { class = "Gimp", role = "gimp-toolbox" },
       properties = { ontop = true } },
-
     { rule = { class = "Gimp", role = "gimp-dock" },
       properties = { ontop = true } },
 
     -- place Inkscape on graphics tag
     { rule = { class = "Inkscape" },
-      properties = { tag = awful.screen.focused().tags[7] } },
+      properties = { tag = awful.screen.focused().tags[6] } },
 }
 -- }}}
 
