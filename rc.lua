@@ -366,6 +366,7 @@ local tasklist_buttons = awful.util.table.join(
                          end
                        else
                          client.focus = c
+                         c:raise()
                        end
                      end),
                      awful.button({ }, 3, function (c)
