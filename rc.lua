@@ -400,7 +400,7 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
     -- Quake application
-    s.quake = lain.util.quake({ app = terminal, followtag = true, argname = "--name %s" })
+    s.quake = lain.util.quake({ app = terminal, height=.35, followtag = true, argname = "--name %s" })
 
     -- Wallpaper
     set_wallpaper(s)
