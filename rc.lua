@@ -66,7 +66,7 @@ local editor     = "/usr/bin/nvim"
 -- user defined
 local browser    = "/usr/bin/firefox"
 local mail       = "/usr/bin/thunderbird"
-local chat       = "/usr/bin/pidgin"
+local chat       = "/usr/bin/franz-bin"
 local gui_editor = "/usr/bin/gvim"
 local graphics   = "/usr/bin/gimp"
 local file_browser = "/usr/bin/nemo"
@@ -768,11 +768,11 @@ globalkeys = awful.util.table.join(
 
     -- User programs
     awful.key({ modkey }, "F1", function () awful.util.spawn(browser) end,
-              {description = "Firefox", group = "launcher"}),
+              {description = "Browser", group = "launcher"}),
     awful.key({ modkey }, "F2", function () awful.util.spawn(mail) end,
-              {description = "Thunderbird", group = "launcher"}),
+              {description = "Mail", group = "launcher"}),
     awful.key({ modkey }, "F3", function () awful.util.spawn(chat) end,
-              {description = "Pidgin", group = "launcher"}),
+              {description = "Chat", group = "launcher"}),
     awful.key({ modkey }, "F4", function () awful.util.spawn(file_browser) end,
               {description = "File Browser", group = "launcher"}),
 
@@ -947,12 +947,8 @@ awful.rules.rules = {
         end },
 
     -- place Pidgin on the chat tag
-    { rule = { class = "Pidgin" },
+    { rule = { class = "Franz" },
       properties = { tag = awful.screen.focused().tags[7] } },
-
-    -- put pidgin password prompts ontop
-    { rule = { class = "Pidgin", role = "multifield" },
-      properties = { ontop = true } },
 
     -- place Steam stuff on app tag
     { rule = { class = "Steam" },
@@ -961,7 +957,6 @@ awful.rules.rules = {
     -- place Gimp on graphics tag
     { rule = { class = "Gimp" },
       properties = { tag = awful.screen.focused().tags[6] } },
-
     -- put the dock and toolbox ontop
     { rule = { class = "Gimp", role = "gimp-toolbox" },
       properties = { ontop = true } },
