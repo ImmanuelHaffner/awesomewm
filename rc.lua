@@ -918,8 +918,12 @@ awful.rules.rules = {
     { rule_any = { type = { "dialog", "normal" } },
       properties = { titlebars_enabled = false } },
 
-    { rule = { class = "Gimp", role = "gimp-image-window" },
-          properties = { maximized = true } },
+    -- Nemo file transfer
+    { rule = { class = "file_progress" },
+      callback = function(c)
+        c.ontop = true
+        c:raise()
+      end },
 
     -- place Firefox on tag 2
     { rule = { class = "Firefox" },
@@ -957,11 +961,15 @@ awful.rules.rules = {
     -- place Gimp on graphics tag
     { rule = { class = "Gimp" },
       properties = { tag = awful.screen.focused().tags[6] } },
+    -- maximize image windows
+    { rule = { class = "Gimp", role = "gimp-image-window" },
+          properties = { maximized = true } },
     -- put the dock and toolbox ontop
     { rule = { class = "Gimp", role = "gimp-toolbox" },
       properties = { ontop = true } },
     { rule = { class = "Gimp", role = "gimp-dock" },
       properties = { ontop = true } },
+
 
     -- place Inkscape on graphics tag
     { rule = { class = "Inkscape" },
