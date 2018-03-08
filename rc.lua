@@ -929,6 +929,10 @@ awful.rules.rules = {
     { rule = { class = "Firefox" },
       properties = { tag = awful.screen.focused().tags[2] } },
 
+    -- place qutebrowser on tag 2
+    { rule = { class = "qutebrowser" },
+      properties = { tag = awful.screen.focused().tags[2] } },
+
     -- place Thunderbird on tag 2
     { rule = { class = "Thunderbird" },
       properties = { tag = awful.screen.focused().tags[2] } },
