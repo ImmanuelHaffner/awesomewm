@@ -64,7 +64,7 @@ local terminal   = "/usr/bin/sakura"
 local editor     = "/usr/bin/nvim"
 
 -- user defined
-local browser    = "/usr/bin/firefox"
+local browser    = "/usr/bin/qutebrowser"
 local mail       = "/usr/bin/thunderbird"
 local chat       = "/usr/bin/franz-bin"
 local gui_editor = "/usr/bin/gvim"
