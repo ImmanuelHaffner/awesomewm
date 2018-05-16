@@ -962,9 +962,11 @@ awful.rules.rules = {
     -- place Steam stuff on app tag
     { rule = { class = "Steam" },
       properties = { tag = awful.screen.focused().tags[5] } },
-    -- Place Battle.net on app tag
+    -- Place Battle.net and games on app tag
     { rule = { name = "Blizzard Battle.net" },
       properties = { tag = awful.screen.focused().tags[5], floating = true } },
+    { rule = { name = "Hearthstone" },
+      properties = { tag = awful.screen.focused().tags[5] } },
 
     -- place Gimp on graphics tag
     { rule = { class = "Gimp" },
