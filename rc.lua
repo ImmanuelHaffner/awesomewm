@@ -911,7 +911,8 @@ awful.rules.rules = {
                      screen = awful.screen.preferred,
                      placement = awful.placement.no_overlap+awful.placement.no_offscreen,
                      size_hints_honor = false
-     }
+     },
+     callback = awful.client.setslave
     },
 
     -- Titlebars
@@ -961,6 +962,9 @@ awful.rules.rules = {
     -- place Steam stuff on app tag
     { rule = { class = "Steam" },
       properties = { tag = awful.screen.focused().tags[5] } },
+    -- Place Battle.net on app tag
+    { rule = { name = "Blizzard Battle.net" },
+      properties = { tag = awful.screen.focused().tags[5], floating = true } },
 
     -- place Gimp on graphics tag
     { rule = { class = "Gimp" },
@@ -973,7 +977,6 @@ awful.rules.rules = {
       properties = { ontop = true } },
     { rule = { class = "Gimp", role = "gimp-dock" },
       properties = { ontop = true } },
-
 
     -- place Inkscape on graphics tag
     { rule = { class = "Inkscape" },
