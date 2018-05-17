@@ -955,8 +955,10 @@ awful.rules.rules = {
           c:raise()
         end },
 
-    -- place Pidgin on the chat tag
+    -- place Messengers on the chat tag
     { rule = { class = "Franz" },
+      properties = { tag = awful.screen.focused().tags[7] } },
+    { rule = { class = "Rambox" },
       properties = { tag = awful.screen.focused().tags[7] } },
 
     -- place Steam stuff on app tag
