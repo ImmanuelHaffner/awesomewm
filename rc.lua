@@ -74,6 +74,7 @@ local iptraf     = terminal .. " -e /usr/bin/bwm-ng"
 local mixer      = terminal .. " -e /usr/bin/alsamixer"
 local musicplr   = terminal .. " -e /usr/bin/ncmpcpp"
 local alsamixer  = terminal .. " -e /usr/bin/alsamixer"
+local pavuc      = "/usr/bin/pavucontrol"
 local top        = terminal .. " -e /usr/bin/htop"
 
 local tagnames   = {"term", "web", "doc", "file", "app", "gfx", "chat"}
@@ -285,7 +286,7 @@ local volume = lain.widgets.alsa({
     end
 })
 local volbtns = awful.util.table.join(
-  awful.button( {}, 1, function () awful.util.spawn_with_shell( alsamixer ) end ),
+  awful.button( {}, 1, function () awful.util.spawn( pavuc ) end ),
   awful.button( {}, 3, function () awful.util.spawn_with_shell("amixer -D pulse sset Master toggle") end ))
 volicon:buttons(volbtns)
 volume:buttons(volbtns)
