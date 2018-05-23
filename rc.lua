@@ -76,6 +76,7 @@ local musicplr   = terminal .. " -e /usr/bin/ncmpcpp"
 local alsamixer  = terminal .. " -e /usr/bin/alsamixer"
 local pavuc      = "/usr/bin/pavucontrol"
 local top        = terminal .. " -e /usr/bin/htop"
+local screenshot = "/usr/bin/spectacle"
 
 local tagnames   = {"term", "web", "doc", "file", "app", "gfx", "chat"}
 
@@ -500,8 +501,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "`", function() awful.screen.focused().quake:toggle() end),
 
     -- Take a screenshot
-    -- https://github.com/copycat-killer/dots/blob/master/bin/screenshot
-    awful.key({ altkey }, "p", function() os.execute("screenshot") end),
+    awful.key({ }, "Print", function() awful.spawn(screenshot) end),
 
     -- Hotkeys
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
