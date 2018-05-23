@@ -920,6 +920,15 @@ awful.rules.rules = {
     { rule_any = { type = { "dialog", "normal" } },
       properties = { titlebars_enabled = false } },
 
+    -- Put spectacle on top and focus immediately
+    { rule = { class = "spectacle" },
+      callback =
+        function (c)
+          c.ontop = true
+          client.focus = c
+          c:raise()
+        end },
+
     -- Nemo file transfer
     { rule = { class = "file_progress" },
       callback = function(c)
