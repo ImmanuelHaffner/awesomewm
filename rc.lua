@@ -77,6 +77,7 @@ local alsamixer  = terminal .. " -e /usr/bin/alsamixer"
 local pavuc      = "/usr/bin/pavucontrol"
 local top        = terminal .. " -e /usr/bin/htop"
 local screenshot = "/usr/bin/spectacle"
+local lock       = "/usr/local/bin/slock2"
 
 local tagnames   = {"term", "web", "doc", "file", "app", "gfx", "chat"}
 
@@ -499,6 +500,10 @@ root.buttons(awful.util.table.join(
 globalkeys = awful.util.table.join(
     -- Quake terminal
     awful.key({ modkey }, "`", function() awful.screen.focused().quake:toggle() end),
+
+    -- Lock screen
+    awful.key({ modkey, altkey }, "l", function() awful.spawn(terminal .. ' -x ' .. lock) end,
+              {description = "Lock screen", group = "launcher"}),
 
     -- Take a screenshot
     awful.key({ }, "Print", function() awful.spawn(screenshot) end),
