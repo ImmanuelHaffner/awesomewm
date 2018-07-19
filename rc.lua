@@ -289,7 +289,18 @@ local volume = lain.widgets.alsa({
 })
 local volbtns = awful.util.table.join(
   awful.button( {}, 1, function () awful.util.spawn( pavuc ) end ),
-  awful.button( {}, 3, function () awful.util.spawn_with_shell("amixer -D pulse sset Master toggle") end ))
+  awful.button( {}, 4, function ()
+    awful.util.spawn_with_shell("amixer -D pulse sset Master 5%+")
+    volume.update()
+  end ),
+  awful.button( {}, 5, function ()
+    awful.util.spawn_with_shell("amixer -D pulse sset Master 5%-")
+    volume.update()
+  end ),
+  awful.button( {}, 3, function ()
+    awful.util.spawn_with_shell("amixer -D pulse sset Master toggle")
+    volume.update()
+  end ))
 volicon:buttons(volbtns)
 volume:buttons(volbtns)
 
@@ -344,9 +355,7 @@ local taglist_buttons = awful.util.table.join(
                                               if client.focus then
                                                   client.focus:toggle_tag(t)
                                               end
-                                          end),
-                    awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
-                    awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
+                                          end)
                 )
 
 local tasklist_buttons = awful.util.table.join(
@@ -418,9 +427,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(awful.util.table.join(
                            awful.button({ }, 1, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 3, function () awful.layout.inc(-1) end),
-                           awful.button({ }, 4, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+                           awful.button({ }, 3, function () awful.layout.inc(-1) end)))
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
 
@@ -490,9 +497,7 @@ end)
 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
-    awful.button({ }, 4, awful.tag.viewnext),
-    awful.button({ }, 5, awful.tag.viewprev)
+    awful.button({ }, 3, function () mymainmenu:toggle() end)
 ))
 -- }}}
 
