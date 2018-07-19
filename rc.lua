@@ -289,7 +289,18 @@ local volume = lain.widgets.alsa({
 })
 local volbtns = awful.util.table.join(
   awful.button( {}, 1, function () awful.util.spawn( pavuc ) end ),
-  awful.button( {}, 3, function () awful.util.spawn_with_shell("amixer -D pulse sset Master toggle") end ))
+  awful.button( {}, 4, function ()
+    awful.util.spawn_with_shell("amixer -D pulse sset Master 5%+")
+    volume.update()
+  end ),
+  awful.button( {}, 5, function ()
+    awful.util.spawn_with_shell("amixer -D pulse sset Master 5%-")
+    volume.update()
+  end ),
+  awful.button( {}, 3, function ()
+    awful.util.spawn_with_shell("amixer -D pulse sset Master toggle")
+    volume.update()
+  end ))
 volicon:buttons(volbtns)
 volume:buttons(volbtns)
 
