@@ -240,7 +240,7 @@ local fsroot = lain.widgets.fs({
     notification_preset = {
       fg = beautiful.fg_normal,
       bg = beautiful.bg_normal,
-      font = "Inconsolata 8"
+      font = "Inconsolata 10"
     },
     settings = function()
         widget:set_text(" " .. fs_now.used .. "% ")
@@ -441,7 +441,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons, mybasewidget)
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = 18 })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = 15 })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
