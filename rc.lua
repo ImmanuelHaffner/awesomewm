@@ -1,3 +1,4 @@
+-- vim: set tabstop=4 shiftwidth=4:
 --[[
 
      Powerarrow Darker Awesome WM config 2.0
@@ -83,8 +84,9 @@ local tagnames   = {"term", "web", "doc", "file", "app", "gfx", "chat"}
 
 -- table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.tile,
     awful.layout.suit.fair,
+    awful.layout.suit.tile,
+    awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
     awful.layout.suit.floating,
@@ -209,7 +211,14 @@ mpdwidget:buttons(mpdbtns)
 local memicon = wibox.widget.imagebox(beautiful.widget_mem)
 local memwidget = lain.widgets.mem({
     settings = function()
-        widget:set_text(" " .. mem_now.used .. "MB ")
+        local mem = tonumber(mem_now.used)
+        if mem < 2000 then
+          widget:set_markup(markup(beautiful.blue, string.format(" %4dMB ", mem)))
+        elseif mem < 26000 then
+          widget:set_markup(markup(beautiful.green, string.format(" %4dMB ", mem)))
+        else
+          widget:set_markup(markup(beautiful.blue, string.format(" %4dMB ", mem)))
+        end
     end
 })
 
@@ -217,7 +226,14 @@ local memwidget = lain.widgets.mem({
 local cpuicon = wibox.widget.imagebox(beautiful.widget_cpu)
 local cpuwidget = lain.widgets.cpu({
     settings = function()
-        widget:set_text(" " .. cpu_now.usage .. "% ")
+        local usage = tonumber(cpu_now.usage)
+        if usage < 5 then
+            widget:set_markup(markup(beautiful.blue, string.format(" %3d%% ", usage)))
+        elseif usage < 80 then
+            widget:set_markup(markup(beautiful.green, string.format(" %3d%% ", usage)))
+        else
+            widget:set_markup(markup(beautiful.magenta, string.format(" %3d%% ", usage)))
+        end
     end
 })
 local cpubtns = awful.util.table.join(awful.button( {}, 1, function () awful.util.spawn_with_shell( top ) end ))
@@ -229,7 +245,14 @@ cpuwidget:buttons(cpubtns)
 local tempicon = wibox.widget.imagebox(beautiful.widget_temp)
 local tempwidget = lain.widgets.temp({
     settings = function()
-        widget:set_text(" " .. coretemp_now .. "°C ")
+        local temp = tonumber(coretemp_now)
+        if temp < 48 then
+            widget:set_markup(markup(beautiful.blue, string.format(" %3d°C ", temp)))
+        elseif temp < 80 then
+            widget:set_markup(markup(beautiful.green, string.format(" %3d°C ", temp)))
+        else
+            widget:set_markup(markup(beautiful.magenta, string.format(" %3d°C ", temp)))
+        end
     end
 })
 
@@ -243,7 +266,14 @@ local fsroot = lain.widgets.fs({
       font = "Inconsolata 10"
     },
     settings = function()
-        widget:set_text(" " .. fs_now.used .. "% ")
+        local used = tonumber(fs_now.used)
+        if used < 75 then
+            widget:set_markup(markup(beautiful.blue, string.format(" %3d%% ", used)))
+        elseif used < 95 then
+            widget:set_markup(markup(beautiful.green, string.format(" %3d%% ", used)))
+        else
+            widget:set_markup(markup(beautiful.magenta, string.format(" %3d%% ", used)))
+        end
     end
 })
 
@@ -253,17 +283,35 @@ local batwidget = lain.widgets.bat({
     settings = function()
         if bat_now.status ~= "N/A" then
             if bat_now.ac_status == 1 then
-                widget:set_markup(" AC ")
+                widget:set_text("")
                 baticon:set_image(beautiful.widget_ac)
                 return
-            elseif not bat_now.perc and tonumber(bat_now.perc) <= 5 then
-                baticon:set_image(beautiful.widget_battery_empty)
-            elseif not bat_now.perc and tonumber(bat_now.perc) <= 15 then
-                baticon:set_image(beautiful.widget_battery_low)
+            elseif type(bat_now.perc) == "number" then
+                -- select color and icon
+                local perc = bat_now.perc
+                local color = beautiful.blue
+                local img = beautiful.widget_battery
+                if perc < 10 then
+                    color = beautiful.magenta
+                    img = beautiful.widget_battery_empty
+                elseif perc < 25 then
+                    color = beautiful.green
+                    img = beautiful.widget_battery_low
+                end
+                -- construct text: 42% (4:20, 42W)
+                s = string.format("%3d%%", perc)
+                if bat_now.time ~= "00:00" then
+                    s = s .. " (" .. bat_now.time
+                    if tonumber(bat_now.watt) ~= 0 then
+                        s = s .. " " .. bat_now.watt .. "W"
+                    end
+                    s = s .. ")"
+                end
+                widget:set_markup(markup(color, " " .. s .. " "))
+                baticon:set_image(img)
             else
-                baticon:set_image(beautiful.widget_battery)
+                widget:set_text(string.format(" %3d%% ", tonumber(bat_now.perc)))
             end
-            widget:set_markup(" " .. bat_now.perc .. "% ")
         else
             baticon:set_image(beautiful.widget_ac)
         end
@@ -283,8 +331,7 @@ local volume = lain.widgets.alsa({
         else
             volicon:set_image(beautiful.widget_vol)
         end
-
-        widget:set_text(" " .. volume_now.level .. "% ")
+        widget:set_text(string.format(" %3d%% ", tonumber(volume_now.level)))
     end
 })
 local volbtns = awful.util.table.join(

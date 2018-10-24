@@ -1,6 +1,6 @@
 [submodule "lain"]
 	path = lain
-	url = git://github.com/copycat-killer/lain.git
+	url = git@github.com:ImmanuelHaffner/lain.git
 
 [submodule "freedesktop"]
 	path = freedesktop
