@@ -1,3 +1,4 @@
+-- vim: set tabstop=4 shiftwidth=4:
 --[[
 
      Powerarrow Darker Awesome WM config 2.0
