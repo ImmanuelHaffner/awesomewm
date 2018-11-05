@@ -1052,6 +1052,12 @@ awful.rules.rules = {
     -- place Inkscape on graphics tag
     { rule = { class = "Inkscape" },
       properties = { tag = awful.screen.focused().tags[6] } },
+
+    -- place Genymotion on apps tag and make player float
+    { rule = { class = "Genymotion" },
+      properties = { tag = awful.screen.focused().tags[5] } },
+    { rule = { class = "Genymotion Player" },
+          properties = { floating = true } },
 }
 -- }}}
 
