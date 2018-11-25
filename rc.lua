@@ -1027,6 +1027,8 @@ awful.rules.rules = {
       properties = { tag = awful.screen.focused().tags[7] } },
     { rule = { class = "Rambox" },
       properties = { tag = awful.screen.focused().tags[7] } },
+    { rule = { class = "discord" },
+      properties = { tag = awful.screen.focused().tags[7] } },
 
     -- place Steam stuff on app tag
     { rule = { class = "Steam" },
