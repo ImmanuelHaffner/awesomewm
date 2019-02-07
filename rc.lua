@@ -1,4 +1,4 @@
--- vim: set tabstop=4 shiftwidth=4:
+-- vim: set tabstop=2 shiftwidth=2:
 --[[
 
      Powerarrow Darker Awesome WM config 2.0
@@ -59,26 +59,27 @@ run_once("unclutter -root")
 beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/theme.lua")
 
 -- common
-local modkey     = "Mod4"
-local altkey     = "Mod1"
-local terminal   = "/usr/bin/sakura"
-local editor     = "/usr/bin/nvim"
+local modkey        = "Mod4"
+local altkey        = "Mod1"
+local terminal      = "/usr/bin/sakura"
+local editor        = "/usr/bin/nvim"
 
 -- user defined
-local browser    = "/usr/bin/qutebrowser"
-local mail       = "/usr/bin/thunderbird"
-local chat       = "/usr/bin/rambox"
-local gui_editor = "/usr/bin/gvim"
-local graphics   = "/usr/bin/gimp"
-local file_browser = "/usr/bin/nemo"
-local iptraf     = terminal .. " -e /usr/bin/bwm-ng"
-local mixer      = terminal .. " -e /usr/bin/alsamixer"
-local musicplr   = terminal .. " -e /usr/bin/ncmpcpp"
-local alsamixer  = terminal .. " -e /usr/bin/alsamixer"
-local pavuc      = "/usr/bin/pavucontrol"
-local top        = terminal .. " -e /usr/bin/htop"
-local screenshot = "/usr/bin/spectacle"
-local lock       = "/usr/local/bin/slock2"
+local browser       = "/usr/bin/qutebrowser"
+local mail          = "/usr/bin/thunderbird"
+local chat          = "/usr/bin/rambox"
+local musicplr      = "/usr/bin/spotify"
+local gui_editor    = "/usr/bin/gvim"
+local graphics      = "/usr/bin/gimp"
+local file_browser  = "/usr/bin/nemo"
+local iptraf        = terminal .. " -e /usr/bin/bwm-ng"
+local mixer         = terminal .. " -e /usr/bin/alsamixer"
+local musicctl      = terminal .. " -e /usr/bin/ncmpcpp"
+local alsamixer     = terminal .. " -e /usr/bin/alsamixer"
+local pavuc         = "/usr/bin/pavucontrol"
+local top           = terminal .. " -e /usr/bin/htop"
+local screenshot    = "/usr/bin/spectacle"
+local lock          = "/usr/local/bin/slock2"
 
 local tagnames   = {"term", "web", "doc", "file", "app", "gfx", "chat"}
 
@@ -182,7 +183,7 @@ myweather.attach(myweather.icon)
 
 -- MPD
 local mpdicon = wibox.widget.imagebox(beautiful.widget_music)
-mpdicon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn_with_shell(musicplr) end)))
+mpdicon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn_with_shell(musicctl) end)))
 local mpdwidget = lain.widgets.mpd({
     settings = function()
         if mpd_now.state == "play" then
@@ -202,7 +203,7 @@ local mpdwidget = lain.widgets.mpd({
     end
 })
 local mpdbtns = awful.util.table.join(
-  awful.button( {}, 1, function () awful.util.spawn_with_shell( musicplr ) end ),
+  awful.button( {}, 1, function () awful.util.spawn_with_shell( musicctl ) end ),
   awful.button( {}, 3, function () os.execute( "/usr/bin/mpc toggle") end ))
 mpdicon:buttons(mpdbtns)
 mpdwidget:buttons(mpdbtns)
@@ -766,7 +767,7 @@ globalkeys = awful.util.table.join(
     -- open ncmpcpp
     awful.key({ modkey, altkey }, "n",
       function()
-        awful.util.spawn_with_shell(musicplr)
+        awful.util.spawn_with_shell(musicctl)
       end,
       {description = "Open NCMPCPP", group = "mpd"}),
     -- toggle Pause/Play
@@ -832,6 +833,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "F3", function () awful.util.spawn(chat) end,
               {description = "Chat", group = "launcher"}),
     awful.key({ modkey }, "F4", function () awful.util.spawn(file_browser) end,
+              {description = "File Browser", group = "launcher"}),
+    awful.key({ modkey }, "F5", function () awful.util.spawn(musicplr) end,
               {description = "File Browser", group = "launcher"}),
 
     -- Default
@@ -1030,6 +1033,9 @@ awful.rules.rules = {
     { rule = { class = "discord" },
       properties = { tag = awful.screen.focused().tags[7] } },
 
+    -- place Spotify on app tag
+    { rule = { class = "Spotify" },
+      properties = { tag = awful.screen.focused().tags[5] } },
     -- place Steam stuff on app tag
     { rule = { class = "Steam" },
       properties = { tag = awful.screen.focused().tags[5] } },
@@ -1044,7 +1050,7 @@ awful.rules.rules = {
       properties = { tag = awful.screen.focused().tags[6] } },
     -- maximize image windows
     { rule = { class = "Gimp", role = "gimp-image-window" },
-          properties = { maximized = true } },
+      properties = { maximized = true } },
     -- put the dock and toolbox ontop
     { rule = { class = "Gimp", role = "gimp-toolbox" },
       properties = { ontop = true } },
@@ -1059,7 +1065,7 @@ awful.rules.rules = {
     { rule = { class = "Genymotion" },
       properties = { tag = awful.screen.focused().tags[5] } },
     { rule = { class = "Genymotion Player" },
-          properties = { floating = true } },
+      properties = { floating = true } },
 }
 -- }}}
 
