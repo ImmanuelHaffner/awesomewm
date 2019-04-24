@@ -124,6 +124,15 @@ local function client_menu_toggle_fn()
         end
     end
 end
+
+-- Execute a command on all *other* clients on a screen
+local function for_other_clients(the_screen, the_client, fn)
+  for i, c in pairs(the_screen.clients) do
+    if c ~= the_client then
+      fn(c)
+    end
+  end
+end
 -- }}}
 
 -- {{{ Menu
@@ -965,15 +974,18 @@ awful.rules.rules = {
     { rule = { },
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
-                     --focus = awful.client.focus.filter,
+                     focus = awful.client.focus.filter,
                      raise = true,
                      keys = clientkeys,
                      buttons = clientbuttons,
-                     screen = awful.screen.focused(),
                      placement = awful.placement.no_overlap+awful.placement.no_offscreen,
                      size_hints_honor = false
-     },
-     callback = awful.client.setslave
+      },
+    callback = function (c)
+      c.screen = awful.screen.focused() or screen.primary
+      awful.client.setslave(c)
+      c:raise()
+    end
     },
 
     -- Titlebars
@@ -1139,15 +1151,18 @@ end)
 --end)
 
 -- No border for maximized clients
-client.connect_signal("focus",
-    function(c)
-        if c.maximized == true then
-            c.border_width = 0
-        -- no borders if only 1 client visible
-        elseif #awful.client.visible(mouse.screen) > 1 then
-            c.border_width = beautiful.border_width
-            c.border_color = beautiful.border_focus
-        end
-    end)
+client.connect_signal("focus", function(c)
+  if c.maximized == true or #mouse.screen.clients == 1 then
+    c.border_width = 0
+  elseif #mouse.screen.clients > 1 then
+    if #mouse.screen.clients == 2 then
+      for_other_clients(mouse.screen, c, function (c)
+        c.border_width = beautiful.border_width
+      end)
+    end
+    c.border_width = beautiful.border_width
+    c.border_color = beautiful.border_focus
+  end
+end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
