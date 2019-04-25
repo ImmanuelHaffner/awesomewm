@@ -974,18 +974,22 @@ awful.rules.rules = {
     { rule = { },
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
-                     focus = awful.client.focus.filter,
+                     --focus = awful.client.focus.filter,
                      raise = true,
                      keys = clientkeys,
                      buttons = clientbuttons,
                      placement = awful.placement.no_overlap+awful.placement.no_offscreen,
                      size_hints_honor = false
       },
-    callback = function (c)
-      c.screen = awful.screen.focused() or screen.primary
-      awful.client.setslave(c)
-      c:raise()
-    end
+      callback = function (c)
+        c.screen = awful.screen.focused() or screen.primary
+        --local fc = awful.client.focus.filter(c)
+        --if fc ~= nil then
+          --client.focus = fc
+        --end
+        awful.client.setslave(c)
+        c:raise()
+      end
     },
 
     -- Titlebars
@@ -1088,10 +1092,6 @@ client.connect_signal("manage", function (c)
     -- i.e. put it at the end of others instead of setting it master.
     -- if not awesome.startup then awful.client.setslave(c) end
 
-    if not client.focus then
-        client.focus = c
-    end
-
     if awesome.startup and
       not c.size_hints.user_position
       and not c.size_hints.program_position then
@@ -1152,11 +1152,12 @@ end)
 
 -- No border for maximized clients
 client.connect_signal("focus", function(c)
-  if c.maximized == true or #mouse.screen.clients == 1 then
+  if c.maximized == true or #c.screen.clients == 1 then
     c.border_width = 0
-  elseif #mouse.screen.clients > 1 then
-    if #mouse.screen.clients == 2 then
-      for_other_clients(mouse.screen, c, function (c)
+  else
+  --elseif #c.screen.clients > 1 then
+    if #c.screen.clients == 2 then
+      for_other_clients(c.screen, c, function (c)
         c.border_width = beautiful.border_width
       end)
     end
