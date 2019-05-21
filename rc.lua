@@ -9,7 +9,7 @@
 -- {{{ Required libraries
 local gears         = require("gears")
 local awful         = require("awful")
-                      require("awful.autofocus")
+require("myautofocus")
 local wibox         = require("wibox")
 local beautiful     = require("beautiful")
 local naughty       = require("naughty")
@@ -974,7 +974,7 @@ awful.rules.rules = {
     { rule = { },
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
-                     --focus = awful.client.focus.filter,
+                     focus = awful.client.focus.filter,
                      raise = true,
                      keys = clientkeys,
                      buttons = clientbuttons,
@@ -983,10 +983,6 @@ awful.rules.rules = {
       },
       callback = function (c)
         c.screen = awful.screen.focused() or screen.primary
-        --local fc = awful.client.focus.filter(c)
-        --if fc ~= nil then
-          --client.focus = fc
-        --end
         awful.client.setslave(c)
         c:raise()
       end
@@ -1092,12 +1088,26 @@ client.connect_signal("manage", function (c)
     -- i.e. put it at the end of others instead of setting it master.
     -- if not awesome.startup then awful.client.setslave(c) end
 
+    local f = awful.client.focus.filter(c)
+    if c ~= nil then
+      awful.client.focus.history.add(f)
+    end
+
     if awesome.startup and
       not c.size_hints.user_position
       and not c.size_hints.program_position then
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
     end
+end)
+
+-- Signal function to execute when a client disappears.
+client.connect_signal("unmanage", function (c)
+  awful.client.focus.history.delete(c)
+  local prev = awful.client.focus.history.get(c.screen, 0, awful.client.focus.filter)
+  if prev ~= nil then
+    client.focus = prev
+  end
 end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
