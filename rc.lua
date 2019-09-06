@@ -1024,7 +1024,6 @@ awful.rules.rules = {
     { rule = { class = "Firefox", name = "Password Required" },
       callback =
         function (c)
-          c.ontop = true
           client.focus = c
           c:raise()
         end },
@@ -1032,7 +1031,6 @@ awful.rules.rules = {
     { rule = { class = "Thunderbird", name = "Password Required" },
       callback =
         function (c)
-          c.ontop = true
           client.focus = c
           c:raise()
         end },
