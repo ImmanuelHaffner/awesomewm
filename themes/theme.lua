@@ -17,7 +17,7 @@ theme.magenta                                   = "#CD357E"
 theme.lightgrey                                 = "#313131"
 theme.darkgrey                                  = "#1A1A1A"
 
-theme.font                                      = "Terminus 8"
+theme.font                                      = "Terminus 9"
 theme.fg_normal                                 = theme.blue
 theme.fg_focus                                  = theme.green
 theme.fg_urgent                                 = theme.magenta
