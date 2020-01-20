@@ -67,7 +67,7 @@ local editor        = "/usr/bin/nvim"
 -- user defined
 local browser       = "/usr/bin/qutebrowser"
 local mail          = "/usr/bin/thunderbird"
-local chat          = "/usr/bin/rambox"
+local chat          = "/usr/bin/franz"
 local musicplr      = "/usr/bin/spotify"
 local gui_editor    = "/usr/bin/gvim"
 local graphics      = "/usr/bin/gimp"
