@@ -67,7 +67,7 @@ local editor        = "/usr/bin/nvim"
 -- user defined
 local browser       = "/usr/bin/qutebrowser"
 local mail          = "/usr/bin/thunderbird"
-local chat          = "/usr/bin/rambox"
+local chat          = "/usr/bin/franz"
 local musicplr      = "/usr/bin/spotify"
 local gui_editor    = "/usr/bin/gvim"
 local graphics      = "/usr/bin/gimp"
@@ -273,7 +273,7 @@ local fsroot = lain.widgets.fs({
     notification_preset = {
       fg = beautiful.fg_normal,
       bg = beautiful.bg_normal,
-      font = "Inconsolata 10"
+      font = "Inconsolata 11"
     },
     settings = function()
         local used = tonumber(fs_now.used)
