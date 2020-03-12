@@ -692,11 +692,10 @@ globalkeys = awful.util.table.join(
         end,
         {description = "go back", group = "client"}),
 
-    -- Show/Hide Wibox
+    -- Toggle Wibox
     awful.key({ modkey }, "b", function ()
-        for s in screen do
-            s.mywibox.visible = not s.mywibox.visible
-        end
+        local s = mouse.screen
+        s.mywibox.visible = not s.mywibox.visible
     end),
 
     -- On the fly useless gaps change
