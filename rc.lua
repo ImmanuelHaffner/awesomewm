@@ -625,7 +625,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "w", function () mymainmenu:show() end,
               {description = "show main menu", group = "awesome"}),
 
-    -- Layout manipulation
+    -- Move clients within screen
     awful.key({ modkey, "Shift"   }, "h", function () awful.client.swap.bydirection("left") end,
               {description = "swap with client left", group = "client"}),
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.bydirection("down") end,
@@ -634,28 +634,55 @@ globalkeys = awful.util.table.join(
               {description = "swap with client above", group = "client"}),
     awful.key({ modkey, "Shift"   }, "l", function () awful.client.swap.bydirection("right") end,
               {description = "swap with client right", group = "client"}),
-    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end,
-              {description = "focus the next screen", group = "screen"}),
-    awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end,
-              {description = "focus the previous screen", group = "screen"}),
+
+    -- Change screen
+    awful.key({ modkey, "Control" }, "h", function () awful.screen.focus_bydirection("left") end,
+              {description = "focus the screen to the left", group = "screen"}),
+    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_bydirection("down") end,
+              {description = "focus the screen below", group = "screen"}),
+    awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_bydirection("up") end,
+              {description = "focus the screen above", group = "screen"}),
+    awful.key({ modkey, "Control" }, "l", function () awful.screen.focus_bydirection("right") end,
+              {description = "focus the screen to the right", group = "screen"}),
+
+    -- Move clients between screens
+    awful.key({ modkey, "Control", "Shift" }, "h", function ()
+      local c = client.focus
+      awful.screen.focus_bydirection("left")
+      awful.client.movetoscreen(c, mouse.screen)
+      client.focus = c
+      c:raise()
+    end,
+              {description = "move client to the screen to the left", group = "screen"}),
     awful.key({ modkey, "Control", "Shift" }, "j", function ()
       local c = client.focus
-      awful.screen.focus_relative(1)
+      awful.screen.focus_bydirection("down")
       awful.client.movetoscreen(c, mouse.screen)
       client.focus = c
       c:raise()
     end,
-              {description = "move client to the next screen", group = "screen"}),
+              {description = "move client to the screen below", group = "screen"}),
     awful.key({ modkey, "Control", "Shift" }, "k", function ()
       local c = client.focus
-      awful.screen.focus_relative(-1)
+      awful.screen.focus_bydirection("up")
       awful.client.movetoscreen(c, mouse.screen)
       client.focus = c
       c:raise()
     end,
-              {description = "move client to the previous screen", group = "screen"}),
+              {description = "move client to the screen above", group = "screen"}),
+    awful.key({ modkey, "Control", "Shift" }, "l", function ()
+      local c = client.focus
+      awful.screen.focus_bydirection("right")
+      awful.client.movetoscreen(c, mouse.screen)
+      client.focus = c
+      c:raise()
+    end,
+              {description = "move client to the screen to the right", group = "screen"}),
+
+    -- Jump to *urgent* client (among all tags)
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
+    -- Switch focus to previously focused client on the same tag
     awful.key({ modkey,           }, "Tab",
         function ()
             awful.client.focus.history.previous()
