@@ -192,7 +192,7 @@ myweather.attach(myweather.icon)
 
 -- MPD
 local mpdicon = wibox.widget.imagebox(beautiful.widget_music)
-mpdicon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn_with_shell(musicctl) end)))
+mpdicon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.spawn.with_shell(musicctl) end)))
 local mpdwidget = lain.widgets.mpd({
     settings = function()
         if mpd_now.state == "play" then
@@ -212,7 +212,7 @@ local mpdwidget = lain.widgets.mpd({
     end
 })
 local mpdbtns = awful.util.table.join(
-  awful.button( {}, 1, function () awful.util.spawn_with_shell( musicctl ) end ),
+  awful.button( {}, 1, function () awful.spawn.with_shell( musicctl ) end ),
   awful.button( {}, 3, function () os.execute( "/usr/bin/mpc toggle") end ))
 mpdicon:buttons(mpdbtns)
 mpdwidget:buttons(mpdbtns)
@@ -246,7 +246,7 @@ local cpuwidget = lain.widgets.cpu({
         end
     end
 })
-local cpubtns = awful.util.table.join(awful.button( {}, 1, function () awful.util.spawn_with_shell( top ) end ))
+local cpubtns = awful.util.table.join(awful.button( {}, 1, function () awful.spawn.with_shell( top ) end ))
 cpuicon:buttons(cpubtns)
 cpuwidget:buttons(cpubtns)
 
@@ -345,17 +345,17 @@ local volume = lain.widgets.alsa({
     end
 })
 local volbtns = awful.util.table.join(
-  awful.button( {}, 1, function () awful.util.spawn( pavuc ) end ),
+  awful.button( {}, 1, function () awful.spawn( pavuc ) end ),
   awful.button( {}, 4, function ()
-    awful.util.spawn_with_shell("amixer -D pulse sset Master 5%+")
+    awful.spawn.with_shell("amixer -D pulse sset Master 5%+")
     volume.update()
   end ),
   awful.button( {}, 5, function ()
-    awful.util.spawn_with_shell("amixer -D pulse sset Master 5%-")
+    awful.spawn.with_shell("amixer -D pulse sset Master 5%-")
     volume.update()
   end ),
   awful.button( {}, 3, function ()
-    awful.util.spawn_with_shell("amixer -D pulse sset Master toggle")
+    awful.spawn.with_shell("amixer -D pulse sset Master toggle")
     volume.update()
   end ))
 volicon:buttons(volbtns)
@@ -386,8 +386,8 @@ local netwidget = lain.widgets.net({
     .. ' ')
   end
 })
-neticon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn_with_shell(iptraf) end)))
-netwidget:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn_with_shell(iptraf) end)))
+neticon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.spawn.with_shell(iptraf) end)))
+netwidget:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.spawn.with_shell(iptraf) end)))
 
 -- Separators
 local spr     = wibox.widget.textbox(' ')
@@ -756,45 +756,45 @@ globalkeys = awful.util.table.join(
     -- Screen Brightness
     awful.key({}, "XF86MonBrightnessUp",
         function ()
-            awful.util.spawn_with_shell("xbacklight -steps 5 -set $(($(xbacklight -get) * 1.3 + 2))")
+            awful.spawn.with_shell("xbacklight -steps 5 -set $(($(xbacklight -get) * 1.3 + 2))")
         end),
     awful.key({}, "XF86MonBrightnessDown",
         function ()
-            awful.util.spawn_with_shell("xbacklight -steps 5 -set $(($(xbacklight -get) / 1.3 - 2))")
+            awful.spawn.with_shell("xbacklight -steps 5 -set $(($(xbacklight -get) / 1.3 - 2))")
         end),
 
     -- Pulse volume control
     awful.key({ modkey }, "Up",
         function ()
-            awful.util.spawn_with_shell("amixer -D pulse sset Master 5%+")
+            awful.spawn.with_shell("amixer -D pulse sset Master 5%+")
             volume.update()
         end,
         {description = "increase volume", group = "pulse"}),
     awful.key({}, "XF86AudioRaiseVolume",
         function ()
-            awful.util.spawn_with_shell("amixer -D pulse sset Master 5%+")
+            awful.spawn.with_shell("amixer -D pulse sset Master 5%+")
             volume.update()
         end),
     awful.key({ modkey }, "Down",
         function ()
-            awful.util.spawn_with_shell("amixer -D pulse sset Master 5%-")
+            awful.spawn.with_shell("amixer -D pulse sset Master 5%-")
             volume.update()
         end,
         {description = "decrease volume", group = "pulse"}),
     awful.key({},"XF86AudioLowerVolume",
         function ()
-            awful.util.spawn_with_shell("amixer -D pulse sset Master 5%-")
+            awful.spawn.with_shell("amixer -D pulse sset Master 5%-")
             volume.update()
         end),
     awful.key({ modkey }, "m",
         function ()
-            awful.util.spawn_with_shell("amixer -D pulse sset Master toggle")
+            awful.spawn.with_shell("amixer -D pulse sset Master toggle")
             volume.update()
         end,
         {description = "mute", group = "pulse"}),
     awful.key({}, "XF86AudioMute",
         function ()
-            awful.util.spawn_with_shell("amixer -D pulse sset Master toggle")
+            awful.spawn.with_shell("amixer -D pulse sset Master toggle")
             volume.update()
         end),
 
@@ -802,57 +802,57 @@ globalkeys = awful.util.table.join(
     -- open ncmpcpp
     awful.key({ modkey, altkey }, "n",
       function()
-        awful.util.spawn_with_shell(musicctl)
+        awful.spawn.with_shell(musicctl)
       end,
       {description = "Open NCMPCPP", group = "mpd"}),
     -- toggle Pause/Play
     awful.key({ altkey, "Control" }, "p",
       function ()
-        awful.util.spawn_with_shell( "mpc toggle" )
+        awful.spawn.with_shell( "mpc toggle" )
         mpdwidget.update()
       end,
       {description = "Pause/Play", group = "mpd"}),
     awful.key( {}, "XF86AudioPlay",
       function ()
-        awful.util.spawn_with_shell( "mpc toggle || ncmpcpp toggle" )
+        awful.spawn.with_shell( "mpc toggle || ncmpcpp toggle" )
         mpdwidget.update()
       end),
     awful.key( {}, "XF86AudioNext",
       function ()
-        awful.util.spawn_with_shell( "mpc next || ncmpcpp next" )
+        awful.spawn.with_shell( "mpc next || ncmpcpp next" )
         mpdwidget.update()
       end),
     awful.key( {}, "XF86AudioPrev",
       function ()
-        awful.util.spawn_with_shell( "mpc prev || ncmpcpp prev" )
+        awful.spawn.with_shell( "mpc prev || ncmpcpp prev" )
         mpdwidget.update()
       end),
     awful.key( {}, "XF86AudioStop",
       function ()
-        awful.util.spawn_with_shell( "mpc stop || ncmpcpp stop" )
+        awful.spawn.with_shell( "mpc stop || ncmpcpp stop" )
         mpdwidget.update()
       end),
     awful.key({ altkey, "Control" }, "Up",
       function ()
-        awful.util.spawn_with_shell("mpc volume +5")
+        awful.spawn.with_shell("mpc volume +5")
         mpdwidget.update()
       end,
       {description = "increase volume", group = "mpd"}),
     awful.key({ altkey, "Control" }, "Down",
       function ()
-        awful.util.spawn_with_shell("mpc volume -5")
+        awful.spawn.with_shell("mpc volume -5")
         mpdwidget.update()
       end,
       {description = "decrease volume", group = "mpd"}),
     awful.key({ altkey, "Control" }, "Left",
       function ()
-        awful.util.spawn_with_shell("mpc prev || ncmpcpp prev || ncmpc prev || pms prev")
+        awful.spawn.with_shell("mpc prev || ncmpcpp prev || ncmpc prev || pms prev")
         mpdwidget.update()
       end,
       {description = "previous song", group = "mpd"}),
     awful.key({ altkey, "Control" }, "Right",
       function ()
-        awful.util.spawn_with_shell("mpc next || ncmpcpp next || ncmpc next || pms next")
+        awful.spawn.with_shell("mpc next || ncmpcpp next || ncmpc next || pms next")
         mpdwidget.update()
       end,
       {description = "next song", group = "mpd"}),
@@ -861,16 +861,20 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "c", function () os.execute("xsel | xsel -b") end),
 
     -- User programs
-    awful.key({ modkey }, "F1", function () awful.util.spawn(browser) end,
+    awful.key({ modkey }, "F1", function () awful.spawn(browser) end,
               {description = "Browser", group = "launcher"}),
-    awful.key({ modkey }, "F2", function () awful.util.spawn(mail) end,
+    awful.key({ modkey }, "F2", function () awful.spawn(mail) end,
               {description = "Mail", group = "launcher"}),
-    awful.key({ modkey }, "F3", function () awful.util.spawn(chat) end,
+    awful.key({ modkey }, "F3", function () awful.spawn(chat) end,
               {description = "Chat", group = "launcher"}),
-    awful.key({ modkey }, "F4", function () awful.util.spawn(file_browser) end,
+    awful.key({ modkey }, "F4", function () awful.spawn(file_browser) end,
               {description = "File Browser", group = "launcher"}),
-    awful.key({ modkey }, "F5", function () awful.util.spawn(musicplr) end,
-              {description = "File Browser", group = "launcher"}),
+    awful.key({ modkey }, "F5", function ()
+        awful.spawn(musicplr)
+        awful.spawn.with_shell("sleep 1; wmctrl -r Spotify -t 4")
+      end,
+      {description = "Spotify", group = "launcher"}
+    ),
 
     -- Default
     -- Prompt
@@ -1024,15 +1028,15 @@ awful.rules.rules = {
     { rule = { class = "file_progress" },
       properties = { ontop = true, focus = false } },
 
-    -- place Firefox on tag 2
+    -- place Firefox on web tag
     { rule = { class = "firefox" },
       properties = { tag = function (c) return awful.screen.focused().tags[2] end } },
 
-    -- place qutebrowser on tag 2
+    -- place qutebrowser on web tag
     { rule = { class = "qutebrowser" },
       properties = { tag = function (c) return awful.screen.focused().tags[2] end } },
 
-    -- place Thunderbird on tag 2
+    -- place Thunderbird on web tag
     { rule = { class = "Thunderbird" },
       properties = { tag = function (c) return awful.screen.focused().tags[2] end } },
 
@@ -1052,8 +1056,9 @@ awful.rules.rules = {
       properties = { tag = function (c) return awful.screen.focused().tags[7] end } },
 
     -- place Spotify on app tag
-    { rule = { class = "Spotify" },
-      properties = { tag = function (c) return awful.screen.focused().tags[5] end } },
+    { rule_any = { class = { "Spotify", "spotify" }, name = { "Spotify Premium", "Spotify" } },
+      -- currently broken because Spotify does not set WM_CLASS and WM_NAME early enough
+    },
     -- place Steam stuff on app tag
     { rule = { class = "Steam" },
       properties = { tag = function (c) return awful.screen.focused().tags[5] end } },
