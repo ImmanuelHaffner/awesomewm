@@ -1000,7 +1000,6 @@ awful.rules.rules = {
     { rule = { },
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
-                     focus = awful.client.focus.filter,
                      raise = true,
                      keys = clientkeys,
                      buttons = clientbuttons,
@@ -1008,7 +1007,6 @@ awful.rules.rules = {
                      size_hints_honor = false
       },
       callback = function (c)
-        c.screen = awful.screen.focused() or screen.primary
         awful.client.setslave(c)
         c:raise()
       end
@@ -1020,88 +1018,72 @@ awful.rules.rules = {
 
     -- Put spectacle on top and focus immediately
     { rule = { class = "spectacle" },
-      callback =
-        function (c)
-          c.ontop = true
-          client.focus = c
-          c:raise()
-        end },
+      properties = { ontop = true } },
 
     -- Nemo file transfer
     { rule = { class = "file_progress" },
-      callback = function(c)
-        c.ontop = true
-        c:raise()
-      end },
+      properties = { ontop = true, focus = false } },
 
     -- place Firefox on tag 2
-    { rule = { class = "Firefox" },
-      properties = { tag = awful.screen.focused().tags[2] } },
+    { rule = { class = "firefox" },
+      properties = { tag = function (c) return awful.screen.focused().tags[2] end } },
 
     -- place qutebrowser on tag 2
     { rule = { class = "qutebrowser" },
-      properties = { tag = awful.screen.focused().tags[2] } },
+      properties = { tag = function (c) return awful.screen.focused().tags[2] end } },
 
     -- place Thunderbird on tag 2
     { rule = { class = "Thunderbird" },
-      properties = { tag = awful.screen.focused().tags[2] } },
+      properties = { tag = function (c) return awful.screen.focused().tags[2] end } },
 
     -- raise Password Prompts always to top
     { rule = { class = "Firefox", name = "Password Required" },
-      callback =
-        function (c)
-          client.focus = c
-          c:raise()
-        end },
+      properties = { ontop = true, focus = true } },
 
     { rule = { class = "Thunderbird", name = "Password Required" },
-      callback =
-        function (c)
-          client.focus = c
-          c:raise()
-        end },
+      properties = { ontop = true, focus = true } },
 
     -- place Messengers on the chat tag
     { rule = { class = "Franz" },
-      properties = { tag = awful.screen.focused().tags[7] } },
+      properties = { tag = function (c) return awful.screen.focused().tags[7] end } },
     { rule = { class = "Rambox" },
-      properties = { tag = awful.screen.focused().tags[7] } },
+      properties = { tag = function (c) return awful.screen.focused().tags[7] end } },
     { rule = { class = "discord" },
-      properties = { tag = awful.screen.focused().tags[7] } },
+      properties = { tag = function (c) return awful.screen.focused().tags[7] end } },
 
     -- place Spotify on app tag
     { rule = { class = "Spotify" },
-      properties = { tag = awful.screen.focused().tags[5] } },
+      properties = { tag = function (c) return awful.screen.focused().tags[5] end } },
     -- place Steam stuff on app tag
     { rule = { class = "Steam" },
-      properties = { tag = awful.screen.focused().tags[5] } },
+      properties = { tag = function (c) return awful.screen.focused().tags[5] end } },
     -- Place Battle.net and games on app tag
     { rule = { name = "Blizzard Battle.net" },
-      properties = { tag = awful.screen.focused().tags[5], floating = true } },
+      properties = { tag = function (c) return awful.screen.focused().tags[5] end, floating = true } },
     { rule = { name = "Hearthstone" },
-      properties = { tag = awful.screen.focused().tags[5] } },
+      properties = { tag = function (c) return awful.screen.focused().tags[5] end, floating = true } },
 
     -- place Gimp on graphics tag
     { rule = { class = "Gimp" },
-      properties = { tag = awful.screen.focused().tags[6] } },
+      properties = { tag = function (c) return awful.screen.focused().tags[6] end } },
     -- maximize image windows
     { rule = { class = "Gimp", role = "gimp-image-window" },
-      properties = { maximized = true } },
+      properties = { tag = function (c) return awful.screen.focused().tags[6] end, maximized = true } },
     -- put the dock and toolbox ontop
-    { rule = { class = "Gimp", role = "gimp-toolbox" },
-      properties = { ontop = true } },
-    { rule = { class = "Gimp", role = "gimp-dock" },
-      properties = { ontop = true } },
+    { rule = { class = "Gimp", role = "gimp-toolbox-1" },
+      properties = { tag = function (c) return awful.screen.focused().tags[6] end, ontop = true, focus = false } },
+    { rule = { class = "Gimp", role = "gimp-dock-1" },
+      properties = { tag = function (c) return awful.screen.focused().tags[6] end, ontop = true, focus = false } },
 
     -- place Inkscape on graphics tag
     { rule = { class = "Inkscape" },
-      properties = { tag = awful.screen.focused().tags[6] } },
+      properties = { tag = function (c) return awful.screen.focused().tags[6] end } },
 
     -- place Genymotion on apps tag and make player float
     { rule = { class = "Genymotion" },
-      properties = { tag = awful.screen.focused().tags[5] } },
+      properties = { tag = function (c) return awful.screen.focused().tags[5] end } },
     { rule = { class = "Genymotion Player" },
-      properties = { floating = true } },
+      properties = { tag = function (c) return awful.screen.focused().tags[5] end, floating = true } },
 }
 -- }}}
 
@@ -1112,14 +1094,14 @@ client.connect_signal("manage", function (c)
     -- i.e. put it at the end of others instead of setting it master.
     -- if not awesome.startup then awful.client.setslave(c) end
 
+    c.screen = awful.screen.focused() or screen.primary
     local f = awful.client.focus.filter(c)
     if c ~= nil then
       awful.client.focus.history.add(f)
+      client.focus = c
     end
 
-    if awesome.startup and
-      not c.size_hints.user_position
-      and not c.size_hints.program_position then
+    if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position then
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
     end
