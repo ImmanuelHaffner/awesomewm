@@ -1054,6 +1054,8 @@ awful.rules.rules = {
       properties = { tag = function (c) return awful.screen.focused().tags[7] end } },
     { rule = { class = "discord" },
       properties = { tag = function (c) return awful.screen.focused().tags[7] end } },
+    { rule = { class = "zoom" },
+      properties = { tag = function (c) return awful.screen.focused().tags[7] end } },
 
     -- place Spotify on app tag
     { rule_any = { class = { "Spotify", "spotify" }, name = { "Spotify Premium", "Spotify" } },
