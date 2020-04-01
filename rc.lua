@@ -1056,6 +1056,9 @@ awful.rules.rules = {
       properties = { tag = function (c) return awful.screen.focused().tags[7] end } },
     { rule = { class = "zoom" },
       properties = { tag = function (c) return awful.screen.focused().tags[7] end } },
+    { rule = { class = "zoom", name = "Zoom Meeting.*" },
+      properties = { tag = function (c) return awful.screen.focused().tags[7] end,
+                     ontop = true, maximized = false } },
 
     -- place Spotify on app tag
     { rule = { class = "[Ss]potify" },
