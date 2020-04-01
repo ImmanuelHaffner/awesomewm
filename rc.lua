@@ -1058,9 +1058,8 @@ awful.rules.rules = {
       properties = { tag = function (c) return awful.screen.focused().tags[7] end } },
 
     -- place Spotify on app tag
-    { rule_any = { class = { "Spotify", "spotify" }, name = { "Spotify Premium", "Spotify" } },
-      -- currently broken because Spotify does not set WM_CLASS and WM_NAME early enough
-    },
+    { rule = { class = "[Ss]potify" },
+      properties = { tag = function (c) return awful.screen.focused().tags[5] end } },
     -- place Steam stuff on app tag
     { rule = { class = "Steam" },
       properties = { tag = function (c) return awful.screen.focused().tags[5] end } },
