@@ -67,7 +67,7 @@ local editor        = "/usr/bin/nvim"
 -- user defined
 local browser       = "/usr/bin/qutebrowser"
 local mail          = "/usr/bin/thunderbird"
-local chat          = "/usr/bin/franz"
+local chat          = "/usr/bin/slack"
 local musicplr      = "/usr/bin/spotify"
 local gui_editor    = "/usr/bin/gvim"
 local graphics      = "/usr/bin/gimp"
@@ -1053,6 +1053,8 @@ awful.rules.rules = {
     { rule = { class = "Rambox" },
       properties = { tag = function (c) return awful.screen.focused().tags[7] end } },
     { rule = { class = "discord" },
+      properties = { tag = function (c) return awful.screen.focused().tags[7] end } },
+    { rule = { class = "Slack" },
       properties = { tag = function (c) return awful.screen.focused().tags[7] end } },
     { rule = { class = "zoom" },
       properties = { tag = function (c) return awful.screen.focused().tags[7] end } },
