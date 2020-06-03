@@ -871,7 +871,7 @@ globalkeys = awful.util.table.join(
               {description = "File Browser", group = "launcher"}),
     awful.key({ modkey }, "F5", function ()
         awful.spawn(musicplr)
-        awful.spawn.with_shell("sleep 1; wmctrl -r Spotify -t 4")
+        awful.spawn.with_shell("sleep 1; wmctrl -r spotify -t 4")
       end,
       {description = "Spotify", group = "launcher"}
     ),
