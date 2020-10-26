@@ -50,7 +50,7 @@ local function run_once(cmd)
   awful.spawn.with_shell(string.format("pgrep -u $USER -x %s > /dev/null || (%s)", findme, cmd))
 end
 
-run_once("unclutter")
+-- run_once("unclutter")
 run_once("qutebrowser -r mutable")
 run_once("thunderbird")
 run_once("slack")
