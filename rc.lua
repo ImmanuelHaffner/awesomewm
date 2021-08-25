@@ -323,7 +323,7 @@ local batwidget = lain.widgets.bat({
                 widget:set_markup(markup(color, " " .. s .. " "))
                 baticon:set_image(img)
             else
-                widget:set_text(string.format(" %3d%% ", tonumber(bat_now.perc)))
+                widget:set_text(string.format(" %3s ", bat_now.perc))
             end
         else
             baticon:set_image(beautiful.widget_ac)
