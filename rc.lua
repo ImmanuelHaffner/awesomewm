@@ -758,13 +758,15 @@ globalkeys = awful.util.table.join(
 
     -- Screen Brightness
     awful.key({}, "XF86MonBrightnessUp",
-        function ()
-            awful.spawn.with_shell("xbacklight -steps 5 -set $(($(xbacklight -get) * 1.3 + 2))")
-        end),
+              function ()
+                awful.spawn.with_shell("xbacklight -steps 5 -set $(($(xbacklight -get) * 1.3 + 2))")
+              end,
+              {description = "increase display brightness", group = "awesome"}),
     awful.key({}, "XF86MonBrightnessDown",
-        function ()
-            awful.spawn.with_shell("xbacklight -steps 5 -set $(($(xbacklight -get) / 1.3 - 2))")
-        end),
+              function ()
+                awful.spawn.with_shell("xbacklight -steps 5 -set $(($(xbacklight -get) / 1.3 - 2))")
+              end,
+              {description = "reduce display brightness", group = "awesome"}),
 
     -- Pulse volume control
     awful.key({ modkey }, "Up",
