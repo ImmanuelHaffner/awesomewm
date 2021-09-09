@@ -259,7 +259,9 @@ local tempicon = wibox.widget.imagebox(beautiful.widget_temp)
 local tempwidget = lain.widgets.temp({
     settings = function()
         local temp = tonumber(coretemp_now)
-        if temp < 48 then
+        if temp == nil then
+            widget:set_markup(markup(beautiful.blue, "N/A"))
+        elseif temp < 48 then
             widget:set_markup(markup(beautiful.blue, string.format(" %3d°C ", temp)))
         elseif temp < 80 then
             widget:set_markup(markup(beautiful.green, string.format(" %3d°C ", temp)))
