@@ -385,9 +385,9 @@ local netwidget = lain.widgets.net({
       color_sent = beautiful.green
     end
 
-    widget:set_markup(markup(color_recv, string.format('%6.1f', recv))
-    .. '  '
-    ..  markup(color_sent, string.format('%5.1f', sent))
+    widget:set_markup(markup(color_recv, string.format('%4.1f Mb/s', recv))
+    .. ' '
+    ..  markup(color_sent, string.format('%4.1f Mb/s', sent))
     .. ' ')
   end
 })
