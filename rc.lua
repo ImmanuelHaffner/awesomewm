@@ -1046,6 +1046,8 @@ awful.rules.rules = {
     -- place Thunderbird on web tag
     { rule = { class = "Thunderbird" },
       properties = { tag = function (c) return awful.screen.focused().tags[2] end } },
+    { rule = { class = "Thunderbird", name = "Message Filters" },
+      properties = { ontop = true, floating = true } },
 
     -- raise Password Prompts always to top
     { rule = { class = "Firefox", name = "Password Required" },
