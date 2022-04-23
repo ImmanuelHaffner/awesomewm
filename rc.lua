@@ -177,7 +177,7 @@ local mytextclock = lain.widgets.abase({
 lain.widgets.calendar.attach(mytextclock, {
     cal = "/usr/bin/cal -m --color=always",
     notification_preset = {
-        font = "Inconsolata 12",
+        font = beautiful.calendar_font,
         fg   = beautiful.fg_normal,
         bg   = beautiful.bg_normal
     }
@@ -185,7 +185,7 @@ lain.widgets.calendar.attach(mytextclock, {
 
 -- Weather
 local myweather = lain.widgets.weather({
-    city_id = 2842647, -- Saarbrücken
+    city_id = beautiful.weather_city_id,
     settings = function()
         units = math.floor(weather_now["main"]["temp"])
         widget:set_markup(" " .. units .. "° ")
@@ -225,9 +225,9 @@ local memicon = wibox.widget.imagebox(beautiful.widget_mem)
 local memwidget = lain.widgets.mem({
     settings = function()
         local mem = tonumber(mem_now.used)
-        if mem < 2000 then
+        if mem < beautiful.mem_load_lo then
           widget:set_markup(markup(beautiful.blue, string.format(" %4dMB ", mem)))
-        elseif mem < 26000 then
+        elseif mem < beautiful.mem_load_hi then
           widget:set_markup(markup(beautiful.green, string.format(" %4dMB ", mem)))
         else
           widget:set_markup(markup(beautiful.blue, string.format(" %4dMB ", mem)))
@@ -240,9 +240,9 @@ local cpuicon = wibox.widget.imagebox(beautiful.widget_cpu)
 local cpuwidget = lain.widgets.cpu({
     settings = function()
         local usage = tonumber(cpu_now.usage)
-        if usage < 5 then
+        if usage < beautiful.cpu_load_lo then
             widget:set_markup(markup(beautiful.blue, string.format(" %3d%% ", usage)))
-        elseif usage < 80 then
+        elseif usage < beautiful.cpu_load_hi then
             widget:set_markup(markup(beautiful.green, string.format(" %3d%% ", usage)))
         else
             widget:set_markup(markup(beautiful.magenta, string.format(" %3d%% ", usage)))
@@ -257,18 +257,19 @@ cpuwidget:buttons(cpubtns)
 -- Coretemp
 local tempicon = wibox.widget.imagebox(beautiful.widget_temp)
 local tempwidget = lain.widgets.temp({
-    settings = function()
-        local temp = tonumber(coretemp_now)
-        if temp == nil then
-            widget:set_markup(markup(beautiful.blue, " N/A "))
-        elseif temp < 48 then
-            widget:set_markup(markup(beautiful.blue, string.format(" %3d°C ", temp)))
-        elseif temp < 80 then
-            widget:set_markup(markup(beautiful.green, string.format(" %3d°C ", temp)))
-        else
-            widget:set_markup(markup(beautiful.magenta, string.format(" %3d°C ", temp)))
-        end
+  tempfile = "/sys/class/thermal/thermal_zone3/temp",
+  settings = function()
+    local temp = tonumber(coretemp_now)
+    if temp == nil then
+      widget:set_markup(markup(beautiful.blue, " N/A "))
+    elseif temp < beautiful.temp_lo then
+      widget:set_markup(markup(beautiful.blue, string.format(" %3d°C ", temp)))
+    elseif temp < beautiful.temp_hi then
+      widget:set_markup(markup(beautiful.green, string.format(" %3d°C ", temp)))
+    else
+      widget:set_markup(markup(beautiful.magenta, string.format(" %3d°C ", temp)))
     end
+  end
 })
 
 -- / fs
@@ -278,13 +279,13 @@ local fsroot = lain.widgets.fs({
     notification_preset = {
       fg = beautiful.fg_normal,
       bg = beautiful.bg_normal,
-      font = "Inconsolata 11"
+      font = beautiful.fs_font
     },
     settings = function()
         local used = tonumber(fs_now.used)
-        if used < 75 then
+        if used < beautiful.fs_load_lo then
             widget:set_markup(markup(beautiful.blue, string.format(" %3d%% ", used)))
-        elseif used < 95 then
+        elseif used < beautiful.fs_load_hi then
             widget:set_markup(markup(beautiful.green, string.format(" %3d%% ", used)))
         else
             widget:set_markup(markup(beautiful.magenta, string.format(" %3d%% ", used)))
@@ -306,10 +307,10 @@ local batwidget = lain.widgets.bat({
                 local perc = bat_now.perc
                 local color = beautiful.blue
                 local img = beautiful.widget_battery
-                if perc < 10 then
+                if perc < beautiful.bat_charge_lo then
                     color = beautiful.magenta
                     img = beautiful.widget_battery_empty
-                elseif perc < 25 then
+                elseif perc < beautiful.bat_charge_hi then
                     color = beautiful.green
                     img = beautiful.widget_battery_low
                 end
@@ -374,14 +375,14 @@ local netwidget = lain.widgets.net({
     local sent = tonumber(net_now.sent)
     local color_recv = beautiful.blue
     local color_sent = beautiful.blue
-    if recv > 8000 then
+    if recv > beautiful.net_recv_hi then
       color_recv = beautiful.magenta
-    elseif recv > 2000 then
+    elseif recv > beautiful.net_recv_lo then
       color_recv = beautiful.green
     end
-    if sent > 400 then
+    if sent > beautiful.net_send_hi then
       color_sent = beautiful.magenta
-    elseif sent > 100 then
+    elseif sent > beautiful.net_send_lo then
       color_sent = beautiful.green
     end
 
@@ -474,7 +475,13 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
     -- Quake application
-    s.quake = lain.util.quake({ app = terminal, height=.35, followtag = true, argname = "--name %s", border = beautiful.border_width })
+    s.quake = lain.util.quake({
+      app = terminal,
+      height = beautiful.quake_height_relative,
+      followtag = true,
+      argname = "--name %s",
+      border = beautiful.border_width
+    })
 
     -- Wallpaper
     set_wallpaper(s)
@@ -497,13 +504,13 @@ awful.screen.connect_for_each_screen(function(s)
     mybasewidget.fg_focus     = beautiful.fg_focus
     mybasewidget.fg_normal    = beautiful.fg_normal
     mybasewidget.fg_urgent    = beautiful.fg_urgent
-    mybasewidget.fg_minimize  = "#808080"
+    mybasewidget.fg_minimize  = beautiful.fg_minimize
 
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons, mybasewidget)
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = 20 })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = beautiful.menu_height })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
