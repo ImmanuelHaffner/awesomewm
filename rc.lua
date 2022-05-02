@@ -661,33 +661,41 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control", "Shift" }, "h", function ()
       local c = client.focus
       awful.screen.focus_bydirection("left")
-      awful.client.movetoscreen(c, mouse.screen)
-      client.focus = c
-      c:raise()
+      if c ~= nil then
+        awful.client.movetoscreen(c, mouse.screen)
+        client.focus = c
+        c:raise()
+      end
     end,
               {description = "move client to the screen to the left", group = "screen"}),
     awful.key({ modkey, "Control", "Shift" }, "j", function ()
       local c = client.focus
       awful.screen.focus_bydirection("down")
-      awful.client.movetoscreen(c, mouse.screen)
-      client.focus = c
-      c:raise()
+      if c ~= nil then
+        awful.client.movetoscreen(c, mouse.screen)
+        client.focus = c
+        c:raise()
+      end
     end,
               {description = "move client to the screen below", group = "screen"}),
     awful.key({ modkey, "Control", "Shift" }, "k", function ()
       local c = client.focus
       awful.screen.focus_bydirection("up")
-      awful.client.movetoscreen(c, mouse.screen)
-      client.focus = c
-      c:raise()
+      if c ~= nil then
+        awful.client.movetoscreen(c, mouse.screen)
+        client.focus = c
+        c:raise()
+      end
     end,
               {description = "move client to the screen above", group = "screen"}),
     awful.key({ modkey, "Control", "Shift" }, "l", function ()
       local c = client.focus
       awful.screen.focus_bydirection("right")
-      awful.client.movetoscreen(c, mouse.screen)
-      client.focus = c
-      c:raise()
+      if c ~= nil then
+        awful.client.movetoscreen(c, mouse.screen)
+        client.focus = c
+        c:raise()
+      end
     end,
               {description = "move client to the screen to the right", group = "screen"}),
 
