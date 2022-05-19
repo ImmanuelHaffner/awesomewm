@@ -41,20 +41,21 @@ end
 -- }}}
 
 -- {{{ Autostart applications
-local function run_once(cmd)
+local function run_once(cmd, delay)
+  delay = delay or 0
   findme = cmd
   firstspace = cmd:find(" ")
   if firstspace then
      findme = cmd:sub(0, firstspace-1)
   end
-  awful.spawn.with_shell(string.format("pgrep -u $USER -x %s > /dev/null || (%s)", findme, cmd))
+  awful.spawn.with_shell(string.format("pgrep -u $USER -x %s > /dev/null || (sleep %d; %s)", findme, delay, cmd))
 end
 
 -- run_once("unclutter")
 run_once("qutebrowser -r mutable")
 run_once("thunderbird")
-run_once("slack")
-run_once("discord")
+run_once("slack", 5)
+run_once("discord", 10)
 -- }}}
 
 -- {{{ Variable definitions
