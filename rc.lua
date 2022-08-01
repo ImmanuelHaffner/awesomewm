@@ -52,10 +52,10 @@ local function run_once(cmd, delay)
 end
 
 -- run_once("unclutter")
-run_once("qutebrowser -r mutable")
-run_once("thunderbird")
-run_once("slack", 5)
-run_once("discord", 10)
+run_once("qutebrowser -r mutable", 5)
+run_once("thunderbird", 5)
+run_once("slack", 10)
+run_once("discord", 12)
 -- }}}
 
 -- {{{ Variable definitions
