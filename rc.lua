@@ -297,13 +297,11 @@ local fsroot = lain.widgets.fs({
 -- Battery
 local baticon = wibox.widget.imagebox(beautiful.widget_battery)
 local batwidget = lain.widgets.bat({
+    ac = beautiful.ac_name,
     settings = function()
+
         if bat_now.status ~= "N/A" then
-            if bat_now.ac_status == 1 then
-                widget:set_text("")
-                baticon:set_image(beautiful.widget_ac)
-                return
-            elseif type(bat_now.perc) == "number" then
+            if type(bat_now.perc) == "number" then
                 -- select color and icon
                 local perc = bat_now.perc
                 local color = beautiful.blue
@@ -315,21 +313,32 @@ local batwidget = lain.widgets.bat({
                     color = beautiful.green
                     img = beautiful.widget_battery_low
                 end
-                -- construct text: 42% (4:20, 42W)
+                if bat_now.ac_status == 1 then
+                    img = beautiful.widget_ac
+                end
+                -- construct text: 42% (04:20, -42W)
                 s = string.format("%3d%%", perc)
                 if bat_now.time ~= "00:00" then
                     s = s .. " (" .. bat_now.time
                     if tonumber(bat_now.watt) ~= 0 then
-                        s = s .. " " .. bat_now.watt .. "W"
+                        s = s .. ', '
+                        if bat_now.ac_status == 1 then
+                          s = s .. '+'
+                        else
+                          s = s .. '-'
+                        end
+                        s = s .. string.format("%.0f", bat_now.watt) .. "W"
                     end
                     s = s .. ")"
                 end
-                widget:set_markup(markup(color, " " .. s .. " "))
+                widget:set_markup(markup(color, s .. " "))
                 baticon:set_image(img)
             else
+                -- percentage is not a number, print as string
                 widget:set_text(string.format(" %3s ", bat_now.perc))
             end
         else
+            -- status not available
             baticon:set_image(beautiful.widget_ac)
         end
     end

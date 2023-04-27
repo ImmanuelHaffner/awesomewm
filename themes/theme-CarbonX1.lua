@@ -131,5 +131,6 @@ theme.net_recv_hi                               = 8000 -- in KiB/s
 theme.net_send_lo                               =  100 -- in KiB/s
 theme.net_send_hi                               =  400 -- in KiB/s
 theme.temp_file                                 = "/sys/class/thermal/thermal_zone3/temp"
+theme.ac_name                                   = "AC"
 
 return theme
