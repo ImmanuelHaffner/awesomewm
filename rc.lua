@@ -302,10 +302,12 @@ local batwidget = lain.widgets.bat({
 
         if bat_now.status ~= "N/A" then
             if type(bat_now.perc) == "number" then
-                -- select color and icon
+                -- default color and icon
                 local perc = bat_now.perc
                 local color = beautiful.blue
                 local img = beautiful.widget_battery
+
+                -- change color and icon depending on battery charge
                 if perc < beautiful.bat_charge_lo then
                     color = beautiful.magenta
                     img = beautiful.widget_battery_empty
@@ -313,9 +315,12 @@ local batwidget = lain.widgets.bat({
                     color = beautiful.green
                     img = beautiful.widget_battery_low
                 end
+
+                -- change icon to AC plug if charging (AC)
                 if bat_now.ac_status == 1 then
                     img = beautiful.widget_ac
                 end
+
                 -- construct text: 42% (04:20, -42W)
                 s = string.format("%3d%%", perc)
                 if bat_now.time ~= "00:00" then
@@ -330,15 +335,19 @@ local batwidget = lain.widgets.bat({
                         s = s .. string.format("%.0f", bat_now.watt) .. "W"
                     end
                     s = s .. ")"
+                else
+                    s = s .. ' (??)'
                 end
+
                 widget:set_markup(markup(color, s .. " "))
                 baticon:set_image(img)
             else
                 -- percentage is not a number, print as string
-                widget:set_text(string.format(" %3s ", bat_now.perc))
+                widget:set_text(string.format(" %3s (?)", bat_now.perc))
             end
         else
             -- status not available
+            widget:set_markup('??')
             baticon:set_image(beautiful.widget_ac)
         end
     end
