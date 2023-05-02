@@ -132,5 +132,6 @@ theme.net_send_lo                               =  100 -- in KiB/s
 theme.net_send_hi                               =  400 -- in KiB/s
 theme.temp_file                                 = "/sys/class/thermal/thermal_zone3/temp"
 theme.ac_name                                   = "AC" -- name of the power plug device
+theme.master_width_factor                       = .85 -- used to calculate size of magnified clients
 
 return theme
