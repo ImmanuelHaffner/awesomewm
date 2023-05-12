@@ -11,7 +11,7 @@ local theme                                     = {}
 -- Copycat's Theme
 theme.dir                                       = os.getenv("HOME") .. "/.config/awesome/themes/powerarrow-darker"
 -- Wallpaper
-theme.wallpaper                                 = os.getenv("HOME") .. "/.config/awesome/wall.png"
+theme.wallpaper                                 = os.getenv("HOME") .. "/.config/awesome/wallpaper"
 
 -- Display DPI, used for calculating pixel sizes
 theme.dpi                                       = 110 -- in DPI
