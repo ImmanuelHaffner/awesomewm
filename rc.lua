@@ -65,7 +65,7 @@ beautiful.init(awful.util.getdir("config") .. "/themes/theme.lua")
 -- common
 local modkey        = "Mod4"
 local altkey        = "Mod1"
-local terminal      = "/usr/bin/sakura"
+local terminal      = "/usr/bin/wezterm"
 local editor        = "/usr/bin/nvim"
 
 -- user defined
