@@ -114,7 +114,8 @@ theme.titlebar_maximized_button_focus_inactive  = theme.dir .. "/icons/titlebar/
 theme.titlebar_maximized_button_normal_inactive = theme.dir .. "/icons/titlebar/maximized_normal_inactive.png"
 
 -- Custom config
-theme.weather_city_id                           = 2842647 -- Saarbrücken
+theme.weather_city_id                           = 2842632 -- Saarlouis
+-- theme.weather_city_id                           = 2842647 -- Saarbrücken
 theme.quake_height_relative                     = .35 -- relative
 theme.mem_load_lo                               =  2000 -- in MiB
 theme.mem_load_hi                               = 26000 -- in MiB
