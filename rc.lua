@@ -258,7 +258,7 @@ cpuwidget:buttons(cpubtns)
 -- Coretemp
 local tempicon = wibox.widget.imagebox(beautiful.widget_temp)
 local tempwidget = lain.widgets.temp({
-  tempfile = "/sys/class/thermal/thermal_zone3/temp",
+  tempfile = beautiful.temp_file,
   settings = function()
     local temp = tonumber(coretemp_now)
     if temp == nil then
