@@ -65,7 +65,7 @@ beautiful.init(awful.util.getdir("config") .. "/themes/theme.lua")
 -- common
 local modkey        = "Mod4"
 local altkey        = "Mod1"
-local terminal      = "/usr/bin/wezterm"
+local terminal      = "/usr/bin/wezterm start"
 local editor        = "/usr/bin/nvim"
 
 -- user defined
@@ -498,7 +498,7 @@ awful.screen.connect_for_each_screen(function(s)
       app = terminal,
       height = beautiful.quake_height_relative,
       followtag = true,
-      argname = "--name %s",
+      argname = "--class %s",
       border = beautiful.border_width
     })
 
