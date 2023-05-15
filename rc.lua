@@ -346,8 +346,7 @@ local batwidget = lain.widgets.bat({
                 widget:set_text(string.format(" %3s (?)", bat_now.perc))
             end
         else
-            -- status not available
-            widget:set_markup('??')
+            -- AC with no battery
             baticon:set_image(beautiful.widget_ac)
         end
     end
