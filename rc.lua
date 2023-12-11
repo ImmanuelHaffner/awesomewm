@@ -52,7 +52,7 @@ local function run_once(cmd, delay)
 end
 
 -- run_once("unclutter")
-run_once("qutebrowser -r mutable", 2)
+run_once("qutebrowser -r firebolt", 2)
 run_once("thunderbird", 4)
 run_once("slack", 6)
 run_once("discord", 8)
