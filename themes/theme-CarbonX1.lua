@@ -14,7 +14,7 @@ theme.dir                                       = os.getenv("HOME") .. "/.config
 theme.wallpaper                                 = os.getenv("HOME") .. "/.config/awesome/wallpaper"
 
 -- Display DPI, used for calculating pixel sizes
-theme.dpi                                       = 324 -- in DPI
+theme.dpi                                       = 162 -- in DPI
 
 -- Colors
 theme.green                                     = "#7AC82E"
@@ -24,9 +24,9 @@ theme.lightgrey                                 = "#313131"
 theme.darkgrey                                  = "#1A1A1A"
 
 -- Font: Style, Size, Color, Background
-theme.font                                      = "Terminus 8"
-theme.calendar_font                             = "Inconsolata 8"
-theme.fs_font                                   = "Inconsolata 7"
+theme.font                                      = "Source Code Pro 8"
+theme.calendar_font                             = "Source Code Pro 8"
+theme.fs_font                                   = "Source Code Pro 7"
 theme.fg_normal                                 = theme.blue
 theme.fg_focus                                  = theme.green
 theme.fg_urgent                                 = theme.magenta
@@ -47,7 +47,7 @@ theme.taglist_bg_focus                          = theme.darkgrey
 theme.taglist_fg_focus                          = theme.green
 
 -- Menu
-theme.menu_height                               = 40
+theme.menu_height                               = 25
 theme.menu_width                                = 140
 theme.menu_submenu_icon                         = theme.dir .. "/icons/submenu.png"
 
@@ -130,7 +130,7 @@ theme.net_recv_lo                               = 2000 -- in KiB/s
 theme.net_recv_hi                               = 8000 -- in KiB/s
 theme.net_send_lo                               =  100 -- in KiB/s
 theme.net_send_hi                               =  400 -- in KiB/s
-theme.temp_file                                 = "/sys/class/thermal/thermal_zone3/temp"
+theme.temp_file                                 = "/sys/class/thermal/thermal_zone7/temp"
 theme.ac_name                                   = "AC" -- name of the power plug device
 theme.master_width_factor                       = .85 -- used to calculate size of magnified clients
 
