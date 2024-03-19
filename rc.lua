@@ -66,7 +66,7 @@ beautiful.init(awful.util.getdir("config") .. "/themes/theme.lua")
 local modkey        = "Mod4"
 local altkey        = "Mod1"
 local terminal      = "/usr/bin/wezterm start"
-local editor        = "/usr/bin/nvim"
+local editor        = "/usr/bin/neovide"
 
 -- user defined
 local browser       = "/usr/bin/qutebrowser"
@@ -143,7 +143,7 @@ end
 local myawesomemenu = {
     { "hotkeys", function() return false, hotkeys_popup.show_help end },
     { "manual", terminal .. " -e man awesome" },
-    { "edit config", string.format("%s -e %s %s", terminal, editor, awesome.conffile) },
+    { "edit config", string.format("%s %s", editor, awesome.conffile) },
     { "restart", awesome.restart },
     { "quit", function() awesome.quit() end }
 }
@@ -154,6 +154,7 @@ local mymainmenu = freedesktop.menu.build({
     },
     after = {
         { "Open terminal", terminal },
+        { "Open editor", editor },
         -- other triads can be put here
     }
 })
@@ -755,6 +756,8 @@ globalkeys = awful.util.table.join(
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
+    awful.key({ modkey, 'Shift' }, "Return", function () awful.spawn(editor) end,
+              {description = "open editor", group = "launcher"}),
     awful.key({ modkey, "Control" }, "BackSpace", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     --awful.key({ modkey, "Shift"   }, "q", awesome.quit,
