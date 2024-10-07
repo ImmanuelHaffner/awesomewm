@@ -177,7 +177,7 @@ local mytextclock = lain.widgets.abase({
 
 -- calendar
 lain.widgets.calendar.attach(mytextclock, {
-    cal = "/usr/bin/cal -m --color=never",
+    cal = "/usr/bin/cal -m --color=always --three",
     notification_preset = {
         font = beautiful.calendar_font,
         fg   = beautiful.fg_normal,
