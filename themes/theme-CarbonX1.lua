@@ -14,7 +14,9 @@ theme.dir                                       = os.getenv("HOME") .. "/.config
 theme.wallpaper                                 = os.getenv("HOME") .. "/.config/awesome/wallpaper"
 
 -- Display DPI, used for calculating pixel sizes
-theme.dpi                                       = 162 -- in DPI
+theme.dpi                                       = 163 -- in DPI, built-in display
+-- theme.dpi                                       = 113 -- in DPI, external monitor
+-- theme.dpi                                       = 82 -- in DPI, external monitor
 
 -- Colors
 theme.green                                     = "#7AC82E"
@@ -24,9 +26,12 @@ theme.lightgrey                                 = "#313131"
 theme.darkgrey                                  = "#1A1A1A"
 
 -- Font: Style, Size, Color, Background
+-- theme.font                                      = "Source Code Pro 12"
+-- theme.calendar_font                             = "Source Code Pro 12"
+-- theme.fs_font                                   = "Source Code Pro 11"
 theme.font                                      = "Source Code Pro 8"
 theme.calendar_font                             = "Source Code Pro 8"
-theme.fs_font                                   = "Source Code Pro 7"
+theme.fs_font                                   = "Source Code Pro 8"
 theme.fg_normal                                 = theme.blue
 theme.fg_focus                                  = theme.green
 theme.fg_urgent                                 = theme.magenta
