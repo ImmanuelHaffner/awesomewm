@@ -187,9 +187,10 @@ lain.widgets.calendar.attach(mytextclock, {
 
 -- Weather
 local myweather = lain.widgets.weather({
-    city_id = beautiful.weather_city_id,
+    APPID = beautiful.weather_appid,
+    city_zip_code = beautiful.weather_city_zip_code,
     settings = function()
-        units = math.floor(weather_now["main"]["temp"])
+        local units = math.floor(weather_now["main"]["temp"])
         widget:set_markup(" " .. units .. "° ")
     end
 })
@@ -243,11 +244,11 @@ local cpuwidget = lain.widgets.cpu({
     settings = function()
         local usage = tonumber(cpu_now.usage)
         if usage < beautiful.cpu_load_lo then
-            widget:set_markup(markup(beautiful.blue, string.format(" %3d%% ", usage)))
+            widget:set_markup(markup(beautiful.blue, string.format("%3d%% ", usage)))
         elseif usage < beautiful.cpu_load_hi then
-            widget:set_markup(markup(beautiful.green, string.format(" %3d%% ", usage)))
+            widget:set_markup(markup(beautiful.green, string.format("%3d%% ", usage)))
         else
-            widget:set_markup(markup(beautiful.magenta, string.format(" %3d%% ", usage)))
+            widget:set_markup(markup(beautiful.magenta, string.format("%3d%% ", usage)))
         end
     end
 })
@@ -263,13 +264,13 @@ local tempwidget = lain.widgets.temp({
   settings = function()
     local temp = tonumber(coretemp_now)
     if temp == nil then
-      widget:set_markup(markup(beautiful.blue, " N/A "))
+      widget:set_markup(markup(beautiful.blue, "N/A "))
     elseif temp < beautiful.temp_lo then
-      widget:set_markup(markup(beautiful.blue, string.format(" %3d°C ", temp)))
+      widget:set_markup(markup(beautiful.blue, string.format("%2d°C ", temp)))
     elseif temp < beautiful.temp_hi then
-      widget:set_markup(markup(beautiful.green, string.format(" %3d°C ", temp)))
+      widget:set_markup(markup(beautiful.green, string.format("%2d°C ", temp)))
     else
-      widget:set_markup(markup(beautiful.magenta, string.format(" %3d°C ", temp)))
+      widget:set_markup(markup(beautiful.magenta, string.format("%2d°C ", temp)))
     end
   end
 })
@@ -283,17 +284,19 @@ local fsroot = lain.widgets.fs({
       bg = beautiful.bg_normal,
       font = beautiful.fs_font
     },
-    settings = function()
-        local used = tonumber(fs_now.used)
-        if used < beautiful.fs_load_lo then
-            widget:set_markup(markup(beautiful.blue, string.format(" %3d%% ", used)))
-        elseif used < beautiful.fs_load_hi then
-            widget:set_markup(markup(beautiful.green, string.format(" %3d%% ", used)))
-        else
-            widget:set_markup(markup(beautiful.magenta, string.format(" %3d%% ", used)))
-        end
-    end
+    settings = function() end,
+    -- settings = function()
+    --     local used = tonumber(fs_now.used)
+    --     if used < beautiful.fs_load_lo then
+    --         widget:set_markup(markup(beautiful.blue, string.format(" %3d%% ", used)))
+    --     elseif used < beautiful.fs_load_hi then
+    --         widget:set_markup(markup(beautiful.green, string.format(" %3d%% ", used)))
+    --     else
+    --         widget:set_markup(markup(beautiful.magenta, string.format(" %3d%% ", used)))
+    --     end
+    -- end
 })
+fsicon:connect_signal('button::press', function () fsroot.show(0) end)
 
 -- Battery
 local baticon = wibox.widget.imagebox(beautiful.widget_battery)
@@ -318,33 +321,35 @@ local batwidget = lain.widgets.bat({
                 end
 
                 -- change icon to AC plug if charging (AC)
+                local s = ''
                 if bat_now.ac_status == 1 then
                     img = beautiful.widget_ac
+                else
+                    s = string.format("%2d%% ", perc)
                 end
 
                 -- construct text: 42% (04:20, -42W)
-                s = string.format("%3d%%", perc)
-                if bat_now.time ~= "00:00" then
-                    s = s .. " (" .. bat_now.time
-                    if tonumber(bat_now.watt) ~= 0 then
-                        s = s .. ', '
-                        if bat_now.ac_status == 1 then
-                          s = s .. '+'
-                        else
-                          s = s .. '-'
-                        end
-                        s = s .. string.format("%.0f", bat_now.watt) .. "W"
-                    end
-                    s = s .. ")"
-                else
-                    s = s .. ' (??)'
-                end
+                -- if bat_now.time ~= "00:00" then
+                --     s = s .. " (" .. bat_now.time
+                --     -- if tonumber(bat_now.watt) ~= 0 then
+                --     --     s = s .. ', '
+                --     --     if bat_now.ac_status == 1 then
+                --     --       s = s .. '+'
+                --     --     else
+                --     --       s = s .. '-'
+                --     --     end
+                --     --     s = s .. string.format("%.0f", bat_now.watt) .. "W"
+                --     -- end
+                --     s = s .. ")"
+                -- else
+                --     s = s .. ' (??)'
+                -- end
 
-                widget:set_markup(markup(color, s .. " "))
+                widget:set_markup(markup(color, s))
                 baticon:set_image(img)
             else
                 -- percentage is not a number, print as string
-                widget:set_text(string.format(" %3s (?)", bat_now.perc))
+                widget:set_text(string.format(" %3s ", bat_now.perc))
             end
         else
             -- AC with no battery
@@ -366,7 +371,8 @@ local volume = lain.widgets.alsa({
         else
             volicon:set_image(beautiful.widget_vol)
         end
-        widget:set_text(string.format(" %3d%% ", tonumber(volume_now.level)))
+        -- Don't set text, the icon is enough.
+        -- widget:set_text(string.format(" %3d%% ", tonumber(volume_now.level)))
     end
 })
 local volbtns = awful.util.table.join(
@@ -405,9 +411,9 @@ local netwidget = lain.widgets.net({
       color_sent = beautiful.green
     end
 
-    widget:set_markup(markup(color_recv, string.format('%4.1f Mb/s', recv))
+    widget:set_markup(markup(color_recv, string.format('%3.1f Mb/s', recv))
     .. ' '
-    ..  markup(color_sent, string.format('%4.1f Mb/s', sent))
+    ..  markup(color_sent, string.format('%3.1f Mb/s', sent))
     .. ' ')
   end
 })
@@ -547,8 +553,8 @@ awful.screen.connect_for_each_screen(function(s)
             wibox.widget.systray(),
             spr,
             arrl_ld,
-            wibox.container.background(mpdicon, beautiful.bg_focus),
-            wibox.container.background(mpdwidget, beautiful.bg_focus),
+            -- wibox.container.background(mpdicon, beautiful.bg_focus),
+            -- wibox.container.background(mpdwidget, beautiful.bg_focus),
             arrl_dl,
             volicon,
             volume,
