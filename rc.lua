@@ -76,12 +76,12 @@ local musicplr      = "/usr/bin/spotify"
 local gui_editor    = "/usr/bin/gvim"
 local graphics      = "/usr/bin/gimp"
 local file_browser  = "/usr/bin/nemo"
-local iptraf        = terminal .. " -e /usr/bin/bwm-ng"
-local mixer         = terminal .. " -e /usr/bin/alsamixer"
-local musicctl      = terminal .. " -e /usr/bin/ncmpcpp"
-local alsamixer     = terminal .. " -e /usr/bin/alsamixer"
+local iptraf        = terminal .. " /usr/bin/bwm-ng"
+local mixer         = terminal .. " /usr/bin/alsamixer"
+local musicctl      = terminal .. " /usr/bin/ncmpcpp"
+local alsamixer     = terminal .. " /usr/bin/alsamixer"
 local pavuc         = "/usr/bin/pavucontrol"
-local top           = terminal .. " -e /usr/bin/htop"
+local top           = terminal .. " /usr/bin/htop"
 local screenshot    = "/usr/bin/spectacle"
 local lock          = "/usr/local/bin/slock2"
 
@@ -142,7 +142,7 @@ end
 -- {{{ Menu
 local myawesomemenu = {
     { "hotkeys", function() return false, hotkeys_popup.show_help end },
-    { "manual", terminal .. " -e man awesome" },
+    { "manual", terminal .. " man awesome" },
     { "edit config", string.format("%s %s", editor, awesome.conffile) },
     { "restart", awesome.restart },
     { "quit", function() awesome.quit() end }
@@ -498,7 +498,7 @@ awful.screen.connect_for_each_screen(function(s)
       app = terminal,
       height = beautiful.quake_height_relative,
       followtag = true,
-      argname = "--class %s",
+      argname = "--class '%s'",
       border = beautiful.border_width
     })
 
@@ -595,7 +595,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "`", function() awful.screen.focused().quake:toggle() end),
 
     -- Lock screen
-    awful.key({ modkey, altkey }, "l", function() awful.spawn(terminal .. ' -x ' .. lock) end,
+    awful.key({ modkey, altkey }, "l", function() awful.spawn(terminal .. ' ' .. lock) end,
               {description = "Lock screen", group = "launcher"}),
 
     -- Take a screenshot
