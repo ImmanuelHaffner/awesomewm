@@ -186,15 +186,15 @@ lain.widgets.calendar.attach(mytextclock, {
 })
 
 -- Weather
-local myweather = lain.widgets.weather({
-    APPID = beautiful.weather_appid,
-    city_zip_code = beautiful.weather_city_zip_code,
-    settings = function()
-        local units = math.floor(weather_now["main"]["temp"])
-        widget:set_markup(" " .. units .. "° ")
-    end
-})
-myweather.attach(myweather.icon)
+-- local myweather = lain.widgets.weather({
+--     APPID = beautiful.weather_appid,
+--     city_zip_code = beautiful.weather_city_zip_code,
+--     settings = function()
+--         local units = math.floor(weather_now["main"]["temp"])
+--         widget:set_markup(" " .. units .. "° ")
+--     end
+-- })
+-- myweather.attach(myweather.icon)
 
 -- MPD
 local mpdicon = wibox.widget.imagebox(beautiful.widget_music)
@@ -565,15 +565,15 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
             spr,
-            arrl_ld,
+            -- arrl_ld,
             -- wibox.container.background(mpdicon, beautiful.bg_focus),
             -- wibox.container.background(mpdwidget, beautiful.bg_focus),
-            arrl_dl,
-            volicon,
-            volume,
+            -- arrl_dl,
             arrl_ld,
-            wibox.container.background(myweather.icon, beautiful.bg_focus),
-            wibox.container.background(myweather, beautiful.bg_focus),
+            wibox.container.background(volicon, beautiful.bg_focus),
+            wibox.container.background(volume, beautiful.bg_focus),
+            -- wibox.container.background(myweather.icon, beautiful.bg_focus),
+            -- wibox.container.background(myweather, beautiful.bg_focus),
             arrl_dl,
             memicon,
             memwidget,
