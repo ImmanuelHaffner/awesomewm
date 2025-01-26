@@ -127,10 +127,10 @@ theme.fs_load_lo                                = 75 -- in %
 theme.fs_load_hi                                = 90 -- in %
 theme.bat_charge_lo                             = 10 -- in %
 theme.bat_charge_hi                             = 25 -- in %
-theme.net_recv_lo                               = 2000 -- in KiB/s
-theme.net_recv_hi                               = 8000 -- in KiB/s
-theme.net_send_lo                               =  100 -- in KiB/s
-theme.net_send_hi                               =  400 -- in KiB/s
+theme.net_recv_lo                               = 2 * 1024^2 -- in b/s
+theme.net_recv_hi                               = 8 * 1024^2 -- in b/s
+theme.net_send_lo                               = 100 * 1024 -- in b/s
+theme.net_send_hi                               = 400 * 1024 -- in b/s
 theme.temp_file                                 = "/sys/class/thermal/thermal_zone0/temp"
 
 return theme

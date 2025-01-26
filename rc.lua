@@ -396,10 +396,11 @@ volume:buttons(volbtns)
 local neticon = wibox.widget.imagebox(beautiful.widget_net)
 local netwidget = lain.widgets.net({
   settings = function()
-    local recv = tonumber(net_now.received)
-    local sent = tonumber(net_now.sent)
+    local recv = tonumber(net_now.received) * 1024^2  -- in b/s
+    local sent = tonumber(net_now.sent) * 1024^2 -- in b/s
     local color_recv = beautiful.blue
     local color_sent = beautiful.blue
+
     if recv > beautiful.net_recv_hi then
       color_recv = beautiful.magenta
     elseif recv > beautiful.net_recv_lo then
@@ -411,9 +412,21 @@ local netwidget = lain.widgets.net({
       color_sent = beautiful.green
     end
 
-    widget:set_markup(markup(color_recv, string.format('%3.1f Mb/s', recv))
+    local format = function(rate)
+      local num_digits = math.log10(rate)
+      local case = num_digits % 3
+
+      local fmt = case == 1 and '%3.1f' or '%3.0f'
+
+      if rate < 1e3 then return string.format('%3.0f', rate) .. '  b/s' end
+      if rate < 1e6 then return string.format(fmt, rate / 1e3) .. ' Kb/s' end
+      if rate < 1e9 then return string.format(fmt, rate / 1e6) .. ' Mb/s' end
+      return string.format(rate / 1e9, fmt) .. ' Gb/s'
+    end
+
+    widget:set_markup(markup(color_recv, format(recv))
     .. ' '
-    ..  markup(color_sent, string.format('%3.1f Mb/s', sent))
+    ..  markup(color_sent, format(sent))
     .. ' ')
   end
 })
