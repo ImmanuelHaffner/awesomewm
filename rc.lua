@@ -413,15 +413,16 @@ local netwidget = lain.widgets.net({
     end
 
     local format = function(rate)
-      local num_digits = math.log10(rate)
+      local num_digits = math.ceil((math.log10(rate)))
       local case = num_digits % 3
 
-      local fmt = case == 1 and '%3.1f' or '%3.0f'
+      local fmt = '%3.0f'
+      if case == 1 then fmt = '%3.1f' end
 
       if rate < 1e3 then return string.format('%3.0f', rate) .. '  b/s' end
       if rate < 1e6 then return string.format(fmt, rate / 1e3) .. ' Kb/s' end
       if rate < 1e9 then return string.format(fmt, rate / 1e6) .. ' Mb/s' end
-      return string.format(rate / 1e9, fmt) .. ' Gb/s'
+      return string.format(fmt, rate / 1e9) .. ' Gb/s'
     end
 
     widget:set_markup(markup(color_recv, format(recv))
