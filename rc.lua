@@ -1166,6 +1166,10 @@ awful.rules.rules = {
       properties = { tag = function (c) return awful.screen.focused().tags[5] end } },
     { rule = { class = "Genymotion Player" },
       properties = { tag = function (c) return awful.screen.focused().tags[5] end, floating = true } },
+
+    -- place Spectacle on top and float
+    { rule = { class = "spectacle" },
+      properties = { ontop = true, focus = true, floating = true } },
 }
 -- }}}
 
