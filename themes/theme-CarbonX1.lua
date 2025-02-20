@@ -1,10 +1,31 @@
-
 --[[
 
      Powerarrow Darker Awesome WM config 2.0
      github.com/copycat-killer
 
 --]]
+
+local awful = require'awful'
+
+local dpi = 96
+local function update_dpi()
+    awful.spawn.easy_async_with_shell(
+        [[xrdb -query | grep 'Xft\.dpi' | awk '{print $2}']],
+        function(stdout)
+            local n = tonumber(stdout)
+            if n then dpi = n end
+        end
+    )
+end
+update_dpi()
+
+local function compute_font_size(dpi)
+    -- 169 dpi ⇒ 8 pt
+    -- 69 dpi ⇒ 13 pt
+    return math.floor(-.05 * dpi + 16.45 + .5)  -- +.5 to round
+end
+
+local default_font_size = compute_font_size(dpi)
 
 local theme                                     = {}
 
@@ -14,9 +35,7 @@ theme.dir                                       = os.getenv("HOME") .. "/.config
 theme.wallpaper                                 = os.getenv("HOME") .. "/.config/awesome/wallpaper"
 
 -- Display DPI, used for calculating pixel sizes
-theme.dpi                                       = 163 -- in DPI, built-in display
--- theme.dpi                                       = 113 -- in DPI, external monitor
--- theme.dpi                                       = 82 -- in DPI, external monitor
+theme.dpi                                       = dpi
 
 -- Colors
 theme.green                                     = "#7AC82E"
@@ -26,12 +45,9 @@ theme.lightgrey                                 = "#313131"
 theme.darkgrey                                  = "#1A1A1A"
 
 -- Font: Style, Size, Color, Background
--- theme.font                                      = "Source Code Pro 12"
--- theme.calendar_font                             = "Source Code Pro 12"
--- theme.fs_font                                   = "Source Code Pro 11"
-theme.font                                      = "Source Code Pro 8"
-theme.calendar_font                             = "Source Code Pro 8"
-theme.fs_font                                   = "Source Code Pro 8"
+theme.font                                      = "Source Code Pro " .. default_font_size
+theme.calendar_font                             = "Source Code Pro " .. default_font_size
+theme.fs_font                                   = "Source Code Pro " .. default_font_size
 theme.fg_normal                                 = theme.blue
 theme.fg_focus                                  = theme.green
 theme.fg_urgent                                 = theme.magenta
@@ -52,8 +68,8 @@ theme.taglist_bg_focus                          = theme.darkgrey
 theme.taglist_fg_focus                          = theme.green
 
 -- Menu
-theme.menu_height                               = 25
-theme.menu_width                                = 140
+theme.menu_height                               = math.floor(2.5 * default_font_size)
+theme.menu_width                                = 2 * dpi
 theme.menu_submenu_icon                         = theme.dir .. "/icons/submenu.png"
 
 -- Layout
