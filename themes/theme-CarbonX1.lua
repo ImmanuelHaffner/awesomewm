@@ -7,17 +7,19 @@
 
 local awful = require'awful'
 
-local dpi = 96
-local function update_dpi()
-    awful.spawn.easy_async_with_shell(
-        [[xrdb -query | grep 'Xft\.dpi' | awk '{print $2}']],
-        function(stdout)
-            local n = tonumber(stdout)
-            if n then dpi = n end
-        end
-    )
+
+--- Executes `cmd` synchronously and capures its stdout.
+--- @param cmd string
+--- @return string
+function os.capture(cmd)
+    local instream = assert(io.popen(cmd, 'r'))
+    local outstream = assert(instream:read('*a'))
+    instream:close()
+    return outstream
 end
-update_dpi()
+
+-- Synchronously get the display DPI.  This blocks the main thread but should return promptly.
+local dpi = os.capture[[xrdb -query | grep Xft.dpi | awk '{print $2}']]
 
 local function compute_font_size(dpi)
     -- 169 dpi ⇒ 8 pt
