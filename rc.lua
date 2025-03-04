@@ -779,7 +779,7 @@ globalkeys = awful.util.table.join(
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
-    awful.key({ modkey, 'Shift' }, "Return", function () awful.spawn(editor) end,
+    awful.key({ modkey, 'Shift' }, "Return", function () awful.spawn.with_shell(editor) end,
               {description = "open editor", group = "launcher"}),
     awful.key({ modkey, "Control" }, "BackSpace", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
