@@ -70,8 +70,8 @@ theme.taglist_bg_focus                          = theme.darkgrey
 theme.taglist_fg_focus                          = theme.green
 
 -- Menu
-theme.menu_height                               = math.floor(2.5 * default_font_size)
-theme.menu_width                                = 2 * dpi
+theme.menu_height                               = math.floor(.18 * dpi)
+theme.menu_width                                = 3 * dpi
 theme.menu_submenu_icon                         = theme.dir .. "/icons/submenu.png"
 
 -- Layout
