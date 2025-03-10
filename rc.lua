@@ -420,18 +420,17 @@ local netwidget = lain.widgets.net({
       local case = num_digits % 3
 
       local fmt = '%3.0f'
+      if rate < 1e3 then return string.format(fmt, rate) .. '  b/s' end
       if case == 1 then fmt = '%3.1f' end
-
-      if rate < 1e3 then return string.format('%3.0f', rate) .. '  b/s' end
       if rate < 1e6 then return string.format(fmt, rate / 1e3) .. ' Kb/s' end
       if rate < 1e9 then return string.format(fmt, rate / 1e6) .. ' Mb/s' end
       return string.format(fmt, rate / 1e9) .. ' Gb/s'
     end
 
-    widget:set_markup(markup(color_recv, format(recv))
+    widget:set_markup('<tt>' .. markup(color_recv, format(recv))
     .. ' '
     ..  markup(color_sent, format(sent))
-    .. ' ')
+    .. ' </tt>')
   end
 })
 neticon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.spawn.with_shell(iptraf) end)))
