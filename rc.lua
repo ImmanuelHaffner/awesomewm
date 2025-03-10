@@ -75,7 +75,7 @@ local editor        = "/usr/bin/neovide"
 local browser       = "/usr/bin/qutebrowser"
 local mail          = "/usr/bin/thunderbird"
 local chat          = "/usr/bin/slack"
-local musicplr      = "/usr/bin/spotify"
+local musicplr      = "/usr/bin/spotify-launcher"
 local gui_editor    = "/usr/bin/gvim"
 local graphics      = "/usr/bin/gimp"
 local file_browser  = "/usr/bin/nemo"
@@ -937,7 +937,6 @@ globalkeys = awful.util.table.join(
               {description = "File Browser", group = "launcher"}),
     awful.key({ modkey }, "F5", function ()
         awful.spawn(musicplr)
-        awful.spawn.with_shell("sleep 1; wmctrl -r spotify -t 4")
       end,
       {description = "Spotify", group = "launcher"}
     ),
