@@ -24,9 +24,9 @@ theme.lightgrey                                 = "#313131"
 theme.darkgrey                                  = "#1A1A1A"
 
 -- Font: Style, Size, Color, Background
-theme.font                                      = "Terminus 10"
+theme.font                                      = "Terminus 11"
 theme.calendar_font                             = "Inconsolata 11"
-theme.fs_font                                   = "Inconsolata 10"
+theme.fs_font                                   = "Inconsolata 11"
 theme.fg_normal                                 = theme.blue
 theme.fg_focus                                  = theme.green
 theme.fg_urgent                                 = theme.magenta
@@ -47,8 +47,8 @@ theme.taglist_bg_focus                          = theme.darkgrey
 theme.taglist_fg_focus                          = theme.green
 
 -- Menu
-theme.menu_height                               = 25
-theme.menu_width                                = 200
+theme.menu_height                               = 30
+theme.menu_width                                = 400
 theme.menu_submenu_icon                         = theme.dir .. "/icons/submenu.png"
 
 -- Layout
