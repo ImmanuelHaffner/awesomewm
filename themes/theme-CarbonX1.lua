@@ -19,7 +19,7 @@ function os.capture(cmd)
 end
 
 -- Synchronously get the display DPI.  This blocks the main thread but should return promptly.
-local dpi = os.capture[[xrdb -query | grep Xft.dpi | awk '{print $2}']]
+local dpi = tonumber(os.capture[[xrdb -query | grep Xft.dpi | awk '{print $2}']]) or 96
 
 local function compute_font_size(dpi)
     -- 169 dpi ⇒ 8 pt
@@ -70,7 +70,7 @@ theme.taglist_bg_focus                          = theme.darkgrey
 theme.taglist_fg_focus                          = theme.green
 
 -- Menu
-theme.menu_height                               = math.floor(.18 * dpi)
+theme.menu_height                               = math.floor(2 + .18 * dpi)
 theme.menu_width                                = 3 * dpi
 theme.menu_submenu_icon                         = theme.dir .. "/icons/submenu.png"
 
