@@ -58,7 +58,7 @@ end
 run_once("qutebrowser -r firebolt", 2)
 run_once("thunderbird", 4)
 run_once("slack", 6)
-run_once("discord", 8)
+-- run_once("discord", 8)
 -- }}}
 
 -- {{{ Variable definitions
