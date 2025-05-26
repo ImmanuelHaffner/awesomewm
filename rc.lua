@@ -816,6 +816,12 @@ globalkeys = awful.util.table.join(
     -- Dropdown application
     awful.key({ modkey, }, "z", function () awful.screen.focused().quake:toggle() end),
 
+    -- Turn on built-in screen
+    awful.key({}, 'XF86Display', function()
+      awful.spawn'xrandr --output eDP-1 --preferred --primary'
+      awful.spawn.with_shell'xbacklight -steps 5 -set 100'
+    end, { description = 'enable built-in display', group = 'awesome' }),
+
     -- Screen Brightness
     awful.key({}, "XF86MonBrightnessUp",
               function ()
