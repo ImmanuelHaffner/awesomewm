@@ -1256,20 +1256,43 @@ end)
     --end
 --end)
 
--- No border for maximized clients
+-- Decorate focused client
 client.connect_signal("focus", function(c)
+  -- Maximized clients have no border.
+  -- Single client on screen has no border.
   if c.maximized == true or #c.screen.clients == 1 then
     c.border_width = 0
-  else
-  --elseif #c.screen.clients > 1 then
-    if #c.screen.clients == 2 then
-      for_other_clients(c.screen, c, function (c)
-        c.border_width = beautiful.border_width
-      end)
-    end
+    return
+  end
+
+  -- Floating client gets border.
+  if c.floating then
     c.border_width = beautiful.border_width
     c.border_color = beautiful.border_focus
+    return
   end
+
+  -- Count all floating clients.
+  local num_clients_floating = 0
+  for _, client in ipairs(c.screen.clients) do
+    if client.floating then
+      num_clients_floating = num_clients_floating + 1
+    end
+  end
+
+  -- If this client is the only non-floating client, then it needs no border.
+  if num_clients_floating == #c.screen.clients - 1 then
+    c.border_width = 0
+    return
+  end
+
+  -- This is a non-floating client that receives a border. This means all other clients on the screen need a border now,
+  -- too.
+  c.border_width = beautiful.border_width
+  c.border_color = beautiful.border_focus
+  for_other_clients(c.screen, c, function (other)
+    other.border_width = beautiful.border_width
+  end)
 end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
